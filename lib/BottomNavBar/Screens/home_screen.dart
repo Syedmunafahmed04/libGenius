@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:libgenius/BottomNavBar/Screens/Home/book_detail.dart';
 import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Widgets/my_appbar.dart';
 import 'package:libgenius/Widgets/my_home_card.dart';
@@ -59,7 +60,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.zero,
 
                   itemBuilder: (context, index) {
-                    return MyHomeCard(onTap: () {});
+                    return MyHomeCard(
+                      onTap: () {
+                        Get.to(() => BookDetail());
+                      },
+                    );
                   },
                 ),
               ),
@@ -80,7 +85,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.zero,
 
                   itemBuilder: (context, index) {
-                    return MyHomeCard(onTap: () {});
+                    return MyHomeCard(
+                      onTap: () {
+                        Get.to(() => BookDetail());
+                      },
+                    );
                   },
                 ),
               ),

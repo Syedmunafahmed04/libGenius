@@ -43,7 +43,7 @@ class MyButton extends StatelessWidget {
               color: borderColor ?? whiteColor,
               width: thickness ?? 0.3,
             ),
-            color: buttonColor ?? Color(0xff383A37),
+            color: buttonColor ?? mainThemeColor,
             // gradient: LinearGradient(
             //   colors: [Color(0xFF62B204), Color(0xFF2A4C02)],
             //   begin: Alignment.topCenter,

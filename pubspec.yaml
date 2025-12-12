@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   get: any
   google_nav_bar: ^5.0.7
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:
