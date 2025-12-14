@@ -19,7 +19,7 @@ class _MyBottomBarState extends State<MyBottomBar> {
   List<Widget> screens = [
     const HomeScreen(),
     const SearchScreen(),
-    const AiScreen(),
+    const ChatScreen(),
     const ProfileScreen(),
   ];
 
@@ -27,31 +27,29 @@ class _MyBottomBarState extends State<MyBottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[_selectedIndex],
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-          child: GNav(
-            selectedIndex: _selectedIndex,
-            onTabChange: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+        child: GNav(
+          selectedIndex: _selectedIndex,
+          onTabChange: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
 
-            color: Colors.white70,
-            activeColor: Colors.white,
-            tabBackgroundColor: mainThemeColor.withValues(alpha: 0.3),
+          color: Colors.white70,
+          activeColor: Colors.white,
+          tabBackgroundColor: mainThemeColor.withValues(alpha: 0.3),
 
-            gap: 8,
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+          gap: 8,
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
 
-            tabs: const [
-              GButton(icon: Icons.home_filled, text: 'Home'),
-              GButton(icon: Icons.search, text: 'Search'),
-              GButton(icon: Icons.ac_unit_sharp, text: 'Ai'),
-              GButton(icon: Icons.person, text: 'Profile'),
-            ],
-          ),
+          tabs: const [
+            GButton(icon: Icons.home_filled, text: 'Home'),
+            GButton(icon: Icons.search, text: 'Search'),
+            GButton(icon: Icons.ac_unit_sharp, text: 'Ai'),
+            GButton(icon: Icons.person, text: 'Profile'),
+          ],
         ),
       ),
     );

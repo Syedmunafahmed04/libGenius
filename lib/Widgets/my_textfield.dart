@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:libgenius/Global/colors.dart';
 
 // ignore: must_be_immutable
@@ -31,7 +30,7 @@ class MyTextField extends StatelessWidget {
     this.borderRadius,
     this.fillColor,
     this.hintStyle,
-    this.height,
+
   });
 
   final String hintText;
@@ -59,59 +58,55 @@ class MyTextField extends StatelessWidget {
   final double? width;
   final double? borderRadius;
   final FontStyle? hintStyle;
-  final double? height;
+
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 7.0),
-      child: SizedBox(
-        height: height,
-        width: width ?? Get.width,
-        child: TextFormField(
-          style: TextStyle(color: textStyleColor ?? whiteColor, fontSize: 13),
-          textInputAction: textInputAction,
-          onFieldSubmitted: onFieldSubmitted,
-          onTap: onTap,
-          minLines: minLines ?? 1,
-          autofocus: autoFocus,
-          validator: validation,
-          maxLines: maxLines ?? 1,
-          initialValue: defaultValue,
-          controller: controller,
-          readOnly: readOnly,
-          obscureText: isObscure,
-          keyboardType: keyboardType,
-          onChanged: onChanged,
-          maxLength: maxLength,
-          cursorColor: blackColor,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: fillColor ?? whiteColor.withValues(alpha: 0.2),
-            contentPadding: const EdgeInsets.all(17.0),
-            suffixIcon: trailing,
-            prefixIcon: leading,
-            counterText: '',
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: bordersColor ?? Colors.transparent),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: bordersColor ?? Colors.transparent),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: bordersColor ?? Colors.transparent),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            hintStyle: TextStyle(
-              fontSize: 14,
-              color: hintStyleColor ?? whiteColor.withValues(alpha: 0.8),
-              fontStyle: hintStyle,
-              fontWeight: FontWeight.w400,
-            ),
-            hintText: hintText,
+      child: TextFormField(
+        style: TextStyle(color: textStyleColor ?? whiteColor, fontSize: 13),
+        textInputAction: textInputAction,
+        onFieldSubmitted: onFieldSubmitted,
+        onTap: onTap,
+        minLines: minLines ?? 1,
+        autofocus: autoFocus,
+        validator: validation,
+        maxLines: maxLines ?? 1,
+        initialValue: defaultValue,
+        controller: controller,
+        readOnly: readOnly,
+        obscureText: isObscure,
+        keyboardType: keyboardType,
+        onChanged: onChanged,
+        maxLength: maxLength,
+        cursorColor: blackColor,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: fillColor ?? whiteColor.withValues(alpha: 0.2),
+          contentPadding: const EdgeInsets.all(12.0),
+          suffixIcon: trailing,
+          prefixIcon: leading,
+          counterText: '',
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: bordersColor ?? Colors.transparent),
+            borderRadius: BorderRadius.circular(25),
           ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: bordersColor ?? Colors.transparent),
+            borderRadius: BorderRadius.circular(25),
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: bordersColor ?? Colors.transparent),
+            borderRadius: BorderRadius.circular(25),
+          ),
+          hintStyle: TextStyle(
+            fontSize: 14,
+            color: hintStyleColor ?? whiteColor.withValues(alpha: 0.8),
+            fontStyle: hintStyle,
+            fontWeight: FontWeight.w400,
+          ),
+          hintText: hintText,
         ),
       ),
     );

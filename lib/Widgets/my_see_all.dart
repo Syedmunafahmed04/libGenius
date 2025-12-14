@@ -3,9 +3,9 @@ import 'package:libgenius/Global/colors.dart';
 
 class MySeeAll extends StatelessWidget {
   final String title;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
-  const MySeeAll({super.key, required this.title, required this.onTap});
+  const MySeeAll({super.key, required this.title,  this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +21,18 @@ class MySeeAll extends StatelessWidget {
           ),
         ),
 
-        GestureDetector(
-          onTap: onTap,
-          child: Text(
-            'See All',
-            style: TextStyle(
-              fontSize: 13,
-              decoration: TextDecoration.underline,
-              decorationColor: Colors.grey,
-              color: Colors.grey,
-            ),
-          ),
-        ),
+        // GestureDetector(
+        //   onTap: onTap,
+        //   child: Text(
+        //     'See All',
+        //     style: TextStyle(
+        //       fontSize: 13,
+        //       decoration: TextDecoration.underline,
+        //       decorationColor: Colors.grey,
+        //       color: Colors.grey,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

@@ -17,6 +17,7 @@ class _MyHomeCardState extends State<MyHomeCard> {
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
+        width: Get.width * 0.45,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
 
         decoration: BoxDecoration(
@@ -37,56 +38,62 @@ class _MyHomeCardState extends State<MyHomeCard> {
               ),
             ),
             height(0.01),
-            SizedBox(
-              width: Get.width * 0.45,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Sealed Necter',
-                    style: TextStyle(
-                      color: Color(0XFFD6D8D8),
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: mainThemeColor,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: FittedBox(
+                    child: Text(
+                      'Sealed Necter',
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
+                ),
 
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        'assets/star.png',
-                        fit: BoxFit.contain,
-                        height: 12,
-                        width: 12,
-                      ),
-                      width(0.01),
-                      Text(
-                        '(4.5)',
-                        style: TextStyle(color: whiteColor, fontSize: 12),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      'assets/star.png',
+                      fit: BoxFit.contain,
+                      height: 12,
+                      width: 12,
+                    ),
+                    width(0.01),
+                    Text(
+                      '(4.5)',
+                      style: TextStyle(color: whiteColor, fontSize: 12),
+                    ),
+                  ],
+                ),
+              ],
             ),
             height(0.005),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
-              decoration: BoxDecoration(
-                color: mainThemeColor,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: FittedBox(
-                child: Text(
-                  'Syed Munaf Ahmed',
-                  style: TextStyle(color: blackColor, fontSize: 11),
+            SizedBox(
+              width: Get.width * 0.35,
+              child: Text(
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                'Safiur Rahman Mubarakpuri',
+                style: TextStyle(
+                  color: Color(0XFFD6D8D8),
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             height(0.005),
             SizedBox(
-              width: Get.width * 0.45,
+              width: Get.width * 0.4,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:libgenius/Global/colors.dart';
 
 class MyButton extends StatelessWidget {
@@ -14,8 +15,10 @@ class MyButton extends StatelessWidget {
     this.labelColor,
     this.elevation,
     this.thickness,
+    this.fontSize,
   });
 
+  final double? fontSize;
   final String label;
   final VoidCallback? onTap;
   final double? height;
@@ -30,7 +33,7 @@ class MyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height ?? 50,
+      height: height ?? Get.height * 0.055,
       width: width ?? double.infinity,
       child: Material(
         elevation: elevation ?? 0,
@@ -40,15 +43,11 @@ class MyButton extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(borderRadius ?? 40.0),
             border: Border.all(
-              color: borderColor ?? whiteColor,
-              width: thickness ?? 0.3,
+              color: borderColor ?? Colors.transparent,
+              width: thickness ?? 0,
             ),
             color: buttonColor ?? mainThemeColor,
-            // gradient: LinearGradient(
-            //   colors: [Color(0xFF62B204), Color(0xFF2A4C02)],
-            //   begin: Alignment.topCenter,
-            //   end: Alignment.bottomCenter,
-            // ),
+        
           ),
           child: InkWell(
             onTap: onTap,
@@ -60,7 +59,7 @@ class MyButton extends StatelessWidget {
                   style: TextStyle(
                     color: labelColor ?? whiteColor,
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: fontSize ?? 14,
                   ),
                 ),
               ),

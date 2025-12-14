@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppbar(),
+      appBar: MyAppbar(isHome: true),
       body: SingleChildScrollView(
         child: Padding(
           padding: myPadding,
@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.asset('assets/banner.jpg', fit: BoxFit.cover),
+                child: Image.asset('assets/hikma.jpg', fit: BoxFit.cover),
               ),
               height(0.02),
               SizedBox(
@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               height(.02),
-              MySeeAll(title: 'Latest', onTap: () {}),
+              MySeeAll(title: 'Latest'),
               height(0.01),
 
               SizedBox(
@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
               height(.02),
-              MySeeAll(title: 'Most Rated', onTap: () {}),
+              MySeeAll(title: 'Most Rated'),
               height(0.01),
 
               SizedBox(
@@ -93,7 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
-              height(0.02),
             ],
           ),
         ),

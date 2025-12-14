@@ -12,10 +12,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(scaffoldBackgroundColor: scaffoldBackgroundColor),
-      home: SplashScreen(),
+    return SafeArea(
+      top: false,
+      left: false,
+      right: false,
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(scaffoldBackgroundColor: scaffoldBackgroundColor),
+        home: SplashScreen(),
+      ),
     );
   }
 }

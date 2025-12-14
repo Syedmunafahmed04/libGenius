@@ -49,7 +49,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   //   return null;
                   // },
                 ),
-                height(0.02),
+                height(0.01),
                 MyButton(
                   onTap: () async {
                     Get.to(() => EnterOtp());

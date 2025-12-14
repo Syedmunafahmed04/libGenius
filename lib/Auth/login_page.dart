@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:libgenius/Auth/forget_password.dart';
 import 'package:libgenius/Auth/sign_up.dart';
-import 'package:libgenius/BottomNavBar/Screens/home_screen.dart';
 import 'package:libgenius/BottomNavBar/my_bottom_bar.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';

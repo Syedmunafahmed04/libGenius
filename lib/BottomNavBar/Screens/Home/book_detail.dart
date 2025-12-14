@@ -3,8 +3,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
+import 'package:libgenius/Widgets/my_book_pageview.dart';
 import 'package:libgenius/Widgets/my_button.dart';
-import 'package:libgenius/Widgets/my_home_card.dart';
+import 'package:libgenius/Widgets/my_textfield.dart';
 
 class BookDetail extends StatefulWidget {
   const BookDetail({super.key});
@@ -14,6 +15,7 @@ class BookDetail extends StatefulWidget {
 }
 
 class _BookDetailState extends State<BookDetail> {
+  final ratingController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -26,19 +28,12 @@ class _BookDetailState extends State<BookDetail> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // MyMenuPageView(),
+            MyBookPageView(),
+            height(0.01),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              margin: EdgeInsets.symmetric(horizontal: 15),
               padding: myPadding,
               decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 1,
-                    offset: Offset(0, 1),
-                    spreadRadius: 1,
-                    color: whiteColor.withValues(alpha: 0.1),
-                  ),
-                ],
                 color: boxColor,
                 borderRadius: BorderRadius.circular(15),
               ),
@@ -108,7 +103,11 @@ class _BookDetailState extends State<BookDetail> {
                           ),
                           width(0.01),
 
-                          Image.asset('assets/star.png', height: 15, width: 15),
+                          Icon(
+                            Icons.star_rounded,
+                            color: Color(0xffFFA600),
+                            size: 15,
+                          ),
 
                           width(0.01),
 
@@ -145,17 +144,32 @@ class _BookDetailState extends State<BookDetail> {
                     ),
                   ),
 
-                  height(0.015),
-
-                  MyButton(label: 'Get Now', onTap: () {}),
+                  // MyButton(
+                  //   label: 'Get Now',
+                  //   fontSize: 14,
+                  //   onTap: () {
+                  //     myAlertDialog(
+                  //       title: 'Get This Book',
+                  //       content:
+                  //           'By tapping on yes you confirm to get this book',
+                  //       onTap: () {
+                  //         mySuccessDialog(
+                  //           title: 'Request Sent!',
+                  //           subtitle: 'Your book request has been sent ',
+                  //         );
+                  //       },
+                  //     );
+                  //   },
+                  // ),
                 ],
               ),
             ),
 
+            height(0.01),
             ListView.separated(
               physics: NeverScrollableScrollPhysics(),
               separatorBuilder: (context, index) {
-                return height(0.02);
+                return height(0.01);
               },
               itemCount: 2,
               shrinkWrap: true,
@@ -165,14 +179,6 @@ class _BookDetailState extends State<BookDetail> {
                   margin: EdgeInsets.symmetric(horizontal: 15),
                   padding: myPadding,
                   decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 1,
-                        offset: Offset(0, 1),
-                        spreadRadius: 1,
-                        color: whiteColor.withValues(alpha: 0.1),
-                      ),
-                    ],
                     color: boxColor,
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -263,30 +269,116 @@ class _BookDetailState extends State<BookDetail> {
               },
             ),
 
-            height(0.03),
+            // height(0.03),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 15),
+            //   child: Text('Related Books', style: categoriesHeadingStyle),
+            // ),
+            // height(0.01),
+
+            // SizedBox(
+            //   height: Get.height * 0.23,
+            //   child: ListView.separated(
+            //     separatorBuilder: (context, index) {
+            //       return width(0.02);
+            //     },
+            //     scrollDirection: Axis.horizontal,
+            //     itemCount: 5,
+            //     padding: EdgeInsets.symmetric(horizontal: 15),
+            //     shrinkWrap: true,
+            //     itemBuilder: (context, index) {
+            //       return MyHomeCard(onTap: () {});
+            //     },
+            //   ),
+            // ),
+            height(0.02),
+
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Text('Related Books', style: categoriesHeadingStyle),
-            ),
-            height(0.01),
+              child: MyButton(
+                label: 'Rate',
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => Padding(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: scaffoldBackgroundColor,
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 15),
 
-            SizedBox(
-              height: Get.height * 0.23,
-              child: ListView.separated(
-                separatorBuilder: (context, index) {
-                  return width(0.02);
-                },
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return MyHomeCard(onTap: () {});
+                          height: Get.height * 0.4,
+
+                          child: Column(
+                            children: [
+                              height(0.01),
+                              Text(
+                                'Rating',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: whiteColor,
+                                ),
+                              ),
+
+                              height(0.02),
+
+                              RatingBar.builder(
+                                glow: false,
+                                allowHalfRating: false,
+                                itemSize: 35,
+
+                                minRating: 1,
+                                unratedColor: Color(0xffD9D9D9),
+                                onRatingUpdate: (value) {},
+                                itemBuilder: (context, index) {
+                                  return Icon(
+                                    Icons.star_rounded,
+
+                                    color: Color(0xffFFA600),
+                                  );
+                                },
+                              ),
+                              height(0.015),
+
+                              MyTextField(
+                                controller: ratingController,
+                                maxLines: 5,
+
+                                hintText: 'Type Your Text...',
+                              ),
+                              height(0.01),
+                              MyButton(
+                                label: 'Submit',
+                                onTap: () {
+                                  mySuccessDialog(
+                                    title: 'Review Submitted!',
+                                    subtitle:
+                                        'Your review has been submitted successfully',
+                                    ontap: () {
+                                      ratingController.clear();
+                                      Get.close(2);
+                                    },
+                                  );
+                                },
+                              ),
+                              height(0.01),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
                 },
               ),
             ),
-
-            height(0.02),
           ],
         ),
       ),

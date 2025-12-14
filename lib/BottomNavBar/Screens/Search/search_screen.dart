@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:libgenius/BottomNavBar/Screens/Home/book_detail.dart';
+import 'package:libgenius/BottomNavBar/Screens/Search/book_filter.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Widgets/my_home_card.dart';
@@ -28,7 +30,7 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          height(0.03),
+          height(0.02),
           Padding(
             padding: myPaddingTop,
             child: Row(
@@ -59,7 +61,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 // ),
                 Expanded(
                   child: MyTextField(
-                    height: Get.height * 0.06,
                     leading: Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
                       child: Icon(Icons.search, color: whiteColor),
@@ -79,23 +80,16 @@ class _SearchScreenState extends State<SearchScreen> {
 
                 GestureDetector(
                   onTap: () {
-                    // Get.to(() => MenuFilter());
+                    Get.to(() => BookFilter());
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     decoration: BoxDecoration(
-                      color: scaffoldBackgroundColor.withValues(alpha: 0.4),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 1,
-                          offset: Offset(0, 1),
-                          spreadRadius: 1,
-                          color: blackColor.withValues(alpha: 0.1),
-                        ),
-                      ],
+                      color: whiteColor.withValues(alpha: 0.2),
+
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Icon(Icons.tune_rounded, color: whiteColor),
+                    child: Icon(Icons.tune_outlined, color: whiteColor),
 
                     // Image.asset(
                     //   'assets/filter.png',
@@ -162,7 +156,11 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               itemBuilder: (context, index) {
                 // final item = allItems[index];
-                return MyHomeCard(onTap: () {});
+                return MyHomeCard(
+                  onTap: () {
+                    Get.to(() => BookDetail());
+                  },
+                );
 
                 // MyMenuGridCard(
                 //   item: item,
