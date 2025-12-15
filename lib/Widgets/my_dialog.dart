@@ -37,7 +37,7 @@ class SuccessDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: whiteColor,
+        color: Color(0XFF313B3A),
         borderRadius: BorderRadius.circular(15.0),
         border: Border.all(color: Colors.grey),
       ),
@@ -54,7 +54,7 @@ class SuccessDialog extends StatelessWidget {
               child: Text(
                 title,
                 style: TextStyle(
-                  color: blackColor,
+                  color: whiteColor,
                   fontWeight: FontWeight.w600,
                   fontSize: 20,
                 ),

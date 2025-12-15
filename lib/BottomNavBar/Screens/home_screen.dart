@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height(0.01),
 
               SizedBox(
-                height: Get.height * 0.23,
+                height: Get.height * 0.24,
                 child: ListView.separated(
                   separatorBuilder: (context, index) {
                     return width(.02);
@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height(0.01),
 
               SizedBox(
-                height: Get.height * 0.23,
+                height: Get.height * 0.24,
                 child: ListView.separated(
                   separatorBuilder: (context, index) {
                     return width(.02);

@@ -15,12 +15,12 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final List<Message> messages = [
     // Add static messages for the person here
-    Message(
-      sender: "Person",
-      content: "I'll text you when I arrive.",
+    // Message(
+    //   sender: "Person",
+    //   content: "I'll text you when I arrive.",
 
-      timestamp: DateTime.now(),
-    ),
+    //   timestamp: DateTime.now(),
+    // ),
     Message(sender: "Me", content: "Great!", timestamp: DateTime.now()),
 
     Message(
@@ -88,27 +88,32 @@ class _ChatScreenState extends State<ChatScreen> {
               physics: const AlwaysScrollableScrollPhysics(),
             ),
           ),
-          Row(
-            children: [
-              Expanded(
-                child: MyTextField(
-                  borderRadius: 25,
+          Divider(height: 0, color: whiteColor, thickness: 0.5),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              children: [
+                Expanded(
+                  child: MyTextField(
+                    margin: EdgeInsets.only(top: 4, bottom: 5),
+                    borderRadius: 25,
 
-                  controller: _textController,
-                  hintText: 'Type a Message',
+                    controller: _textController,
+                    hintText: 'Type a Message',
+                  ),
                 ),
-              ),
-              width(0.02),
+                width(0.02),
 
-              GestureDetector(
-                onTap: () {
-                  if (_textController.text.isEmpty) {
-                    _sendMessage(_textController.text);
-                  }
-                },
-                child: Icon(Icons.send, size: 22, color: whiteColor),
-              ),
-            ],
+                GestureDetector(
+                  onTap: () {
+                    if (_textController.text.isNotEmpty) {
+                      _sendMessage(_textController.text);
+                    }
+                  },
+                  child: Icon(Icons.send, size: 22, color: whiteColor),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -129,10 +134,17 @@ class _ChatScreenState extends State<ChatScreen> {
             margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: isSender ? Color(0xff00DCD2) : whiteColor,
-              border: Border.all(color: isSender ? whiteColor : whiteColor),
+              color: isSender
+                  ? mainThemeColor.withValues(alpha: 0.3)
+                  : greyColor.withValues(alpha: 0.3),
+              border: Border.all(
+                color: isSender
+                    ? whiteColor.withValues(alpha: 0.3)
+                    : whiteColor.withValues(alpha: 0.3),
+              ),
             ),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: isSender
                   ? CrossAxisAlignment.end
                   : CrossAxisAlignment.start,
@@ -141,21 +153,13 @@ class _ChatScreenState extends State<ChatScreen> {
                 Text(
                   message.content,
                   style: TextStyle(
-                    color: isSender ? whiteColor : blackColor,
+                    color: isSender ? whiteColor : whiteColor,
                     fontWeight: FontWeight.w500,
-                    fontSize: 15,
+                    fontSize: 14,
                   ),
                 ),
 
-                height(0.01),
-
-                Text(
-                  "1 day ago",
-                  style: TextStyle(
-                    color: isSender ? whiteColor : greyColor,
-                    fontSize: 12,
-                  ),
-                ),
+                height(0.005),
               ],
             ),
           ),

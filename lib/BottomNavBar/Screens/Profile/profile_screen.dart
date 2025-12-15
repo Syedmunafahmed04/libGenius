@@ -3,8 +3,11 @@ import 'package:get/get.dart';
 import 'package:libgenius/Auth/change_password.dart';
 import 'package:libgenius/Auth/login_page.dart';
 import 'package:libgenius/BottomNavBar/Screens/Profile/about_us.dart';
+import 'package:libgenius/BottomNavBar/Screens/Profile/my_books.dart';
+import 'package:libgenius/BottomNavBar/Screens/Profile/my_info.dart';
 import 'package:libgenius/BottomNavBar/Screens/Profile/privacy_policy.dart';
 import 'package:libgenius/BottomNavBar/Screens/Profile/terms_conditions.dart';
+import 'package:libgenius/BottomNavBar/Screens/Profile/user_history.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Widgets/my_appbar.dart';
@@ -23,42 +26,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: MyAppbar(title: 'Profile', isBack: false),
 
-      body: SingleChildScrollView(
+      body: Padding(
         padding: myPadding,
         child: Column(
           children: [
             Center(
               child: ClipOval(
-                child: Image.asset('assets/men.jpg', height: 50, width: 50),
+                child: Image.asset(
+                  'assets/men.jpg',
+                  height: 90,
+                  width: 90,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
 
-            height(0.02),
+            height(0.01),
 
             Card(
-              color: whiteColor,
+              color: Color(0XFF313B3A),
 
-              elevation: 2,
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 25, horizontal: 15),
                 child: Column(
                   children: [
                     GestureDetector(
                       onTap: () {
-                        // Get.to(() => EditProfile());
+                        Get.to(() => MyInfo());
                       },
                       child: Row(
                         children: [
                           Image.asset(
                             'assets/profile2.png',
+                            color: whiteColor,
                             height: 20,
                             width: 20,
                           ),
                           width(0.02),
                           Text(
-                            'My Profile',
+                            'My Information',
                             style: TextStyle(
-                              color: blackColor,
+                              color: whiteColor,
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
                             ),
@@ -66,8 +74,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Spacer(),
                           Icon(
                             Icons.arrow_forward_ios_rounded,
-                            color: blackColor,
-                            size: 18,
+                            color: whiteColor,
+                            size: 16,
                           ),
                         ],
                       ),
@@ -82,6 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           Image.asset(
                             'assets/security.png',
+                            color: whiteColor,
                             height: 22,
                             width: 18,
                           ),
@@ -89,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Text(
                             'Security',
                             style: TextStyle(
-                              color: blackColor,
+                              color: whiteColor,
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
                             ),
@@ -97,8 +106,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Spacer(),
                           Icon(
                             Icons.arrow_forward_ios_rounded,
-                            color: blackColor,
-                            size: 18,
+                            color: whiteColor,
+                            size: 16,
                           ),
                         ],
                       ),
@@ -109,27 +118,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
 
             Card(
-              color: whiteColor,
+              color: Color(0XFF313B3A),
 
-              elevation: 2,
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 25, horizontal: 15),
                 child: Column(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => MyBooks());
+                      },
                       child: Row(
                         children: [
-                          // Image.asset(
-                          //   'assets/orders.png',
-                          //   height: 22,
-                          //   width: 23,
-                          // ),
+                          Icon(
+                            Icons.book_outlined,
+                            color: whiteColor,
+                            size: 24,
+                          ),
                           width(0.017),
                           Text(
                             'My Books',
                             style: TextStyle(
-                              color: blackColor,
+                              color: whiteColor,
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
                             ),
@@ -137,8 +147,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Spacer(),
                           Icon(
                             Icons.arrow_forward_ios_rounded,
-                            color: blackColor,
-                            size: 18,
+                            color: whiteColor,
+                            size: 16,
                           ),
                         ],
                       ),
@@ -146,19 +156,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     height(0.02),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => UserHistory());
+                      },
                       child: Row(
                         children: [
-                          // Image.asset(
-                          //   'assets/transaction_history.png',
-                          //   height: 21,
-                          //   width: 21,
-                          // ),
+                          Icon(
+                            Icons.history_toggle_off_sharp,
+                            color: whiteColor,
+                            size: 24,
+                          ),
                           width(0.02),
                           Text(
                             'History',
                             style: TextStyle(
-                              color: blackColor,
+                              color: whiteColor,
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
                             ),
@@ -166,38 +178,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Spacer(),
                           Icon(
                             Icons.arrow_forward_ios_rounded,
-                            color: blackColor,
-                            size: 18,
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    height(0.02),
-
-                    GestureDetector(
-                      onTap: () {},
-                      child: Row(
-                        children: [
-                          // Image.asset(
-                          //   'assets/orders.png',
-                          //   height: 22,
-                          //   width: 23,
-                          // ),
-                          width(0.017),
-                          Text(
-                            'Fines',
-                            style: TextStyle(
-                              color: blackColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
-                          ),
-                          Spacer(),
-                          Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            color: blackColor,
-                            size: 18,
+                            color: whiteColor,
+                            size: 16,
                           ),
                         ],
                       ),
@@ -208,9 +190,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
 
             Card(
-              color: whiteColor,
+              color: Color(0XFF313B3A),
 
-              elevation: 2,
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 25, horizontal: 15),
                 child: Column(
@@ -223,6 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           Image.asset(
                             'assets/privacy.png',
+                            color: whiteColor,
                             height: 22,
                             width: 26,
                           ),
@@ -230,7 +212,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Text(
                             'Privacy Policy',
                             style: TextStyle(
-                              color: blackColor,
+                              color: whiteColor,
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
                             ),
@@ -238,8 +220,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Spacer(),
                           Icon(
                             Icons.arrow_forward_ios_rounded,
-                            color: blackColor,
-                            size: 18,
+                            color: whiteColor,
+                            size: 16,
                           ),
                         ],
                       ),
@@ -254,6 +236,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           Image.asset(
                             'assets/terms.png',
+                            color: whiteColor,
                             height: 22,
                             width: 23,
                           ),
@@ -261,7 +244,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Text(
                             'Terms & Conditions',
                             style: TextStyle(
-                              color: blackColor,
+                              color: whiteColor,
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
                             ),
@@ -269,8 +252,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Spacer(),
                           Icon(
                             Icons.arrow_forward_ios_rounded,
-                            color: blackColor,
-                            size: 18,
+                            color: whiteColor,
+                            size: 16,
                           ),
                         ],
                       ),
@@ -284,6 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           Image.asset(
                             'assets/about.png',
+                            color: whiteColor,
                             height: 24,
                             width: 25,
                           ),
@@ -291,7 +275,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Text(
                             'About Us',
                             style: TextStyle(
-                              color: blackColor,
+                              color: whiteColor,
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
                             ),
@@ -299,8 +283,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Spacer(),
                           Icon(
                             Icons.arrow_forward_ios_rounded,
-                            color: blackColor,
-                            size: 18,
+                            color: whiteColor,
+                            size: 16,
                           ),
                         ],
                       ),
@@ -310,7 +294,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
 
-            height(0.01),
+            Spacer(),
 
             MyButton(
               label: 'Logout',
@@ -327,7 +311,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 //   context: context,
                 //   builder: (context) {
                 //     return AlertDialog(
-                //       backgroundColor: whiteColor,
+                //       backgroundColor:      Color(0XFF313B3A),
                 //       title: Text(
                 //         'Logout',
                 //         style: TextStyle(fontWeight: FontWeight.bold),
@@ -345,7 +329,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 //               child: Text(
                 //                 'Cancel',
                 //                 style: TextStyle(
-                //                   color: blackColor,
+                //                   color: whiteColor,
                 //                   fontWeight: FontWeight.bold,
                 //                 ),
                 //               ),

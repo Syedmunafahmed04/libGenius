@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
+import 'package:libgenius/Widgets/my_appbar.dart';
 import 'package:libgenius/Widgets/my_button.dart';
 import 'package:libgenius/Widgets/my_textfield.dart';
 
@@ -24,23 +25,29 @@ class _UpdatePasswordState extends State<UpdatePassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: MyAppbar(title: 'Update Password'),
       body: SingleChildScrollView(
+        padding: myPadding,
         child: Form(
           key: formKey,
           child: Column(
             children: [
-              height(0.02),
               MyTextField(
-                textStyleColor: blackColor,
-                hintStyleColor: blackColor,
-                fillColor: Color(0xffE8E8E8),
-                hintText: 'Enter Current Password',
+                hintText: 'Current Password',
                 controller: currentPasswordController,
                 isObscure: showCurrentPass,
                 trailing: IconButton(
                   icon: showCurrentPass
-                      ? Icon(Icons.visibility_off_outlined, color: blackColor)
-                      : Icon(Icons.visibility_outlined, color: blackColor),
+                      ? Icon(
+                          Icons.visibility_outlined,
+                          color: whiteColor,
+                          size: 20,
+                        )
+                      : Icon(
+                          Icons.visibility_off_outlined,
+                          color: whiteColor,
+                          size: 20,
+                        ),
                   onPressed: () {
                     setState(() => showCurrentPass = !showCurrentPass);
                   },
@@ -53,16 +60,21 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                 },
               ),
               MyTextField(
-                textStyleColor: blackColor,
-                hintStyleColor: blackColor,
-                fillColor: Color(0xffE8E8E8),
-                hintText: 'Enter New Password',
+                hintText: 'New Password',
                 controller: passwordController,
                 isObscure: showPass,
                 trailing: IconButton(
                   icon: showPass
-                      ? Icon(Icons.visibility_off_outlined, color: blackColor)
-                      : Icon(Icons.visibility_outlined, color: blackColor),
+                      ? Icon(
+                          Icons.visibility_outlined,
+                          color: whiteColor,
+                          size: 20,
+                        )
+                      : Icon(
+                          Icons.visibility_off_outlined,
+                          color: whiteColor,
+                          size: 20,
+                        ),
                   onPressed: () {
                     setState(() => showPass = !showPass);
                   },
@@ -75,16 +87,21 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                 },
               ),
               MyTextField(
-                textStyleColor: blackColor,
-                hintStyleColor: blackColor,
-                fillColor: Color(0xffE8E8E8),
-                hintText: 'Enter Confirm Password',
+                hintText: 'Confirm Password',
                 controller: confirmPasswordController,
                 isObscure: showConfirmPass,
                 trailing: IconButton(
                   icon: showConfirmPass
-                      ? Icon(Icons.visibility_off_outlined, color: blackColor)
-                      : Icon(Icons.visibility_outlined, color: blackColor),
+                      ? Icon(
+                          Icons.visibility_outlined,
+                          color: whiteColor,
+                          size: 20,
+                        )
+                      : Icon(
+                          Icons.visibility_off_outlined,
+                          color: whiteColor,
+                          size: 20,
+                        ),
                   onPressed: () {
                     setState(() => showConfirmPass = !showConfirmPass);
                   },
@@ -96,7 +113,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                   return null;
                 },
               ),
-              height(0.02),
+              height(0.01),
               MyButton(
                 buttonColor: mainThemeColor,
                 label: "Update",

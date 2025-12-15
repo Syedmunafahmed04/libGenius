@@ -10,7 +10,7 @@ class MyTextField extends StatelessWidget {
     this.maxLength,
     this.onTap,
     this.maxLines,
-    this.minLines,
+
     this.isObscure = false,
     this.readOnly = false,
     this.autoFocus = false,
@@ -30,7 +30,7 @@ class MyTextField extends StatelessWidget {
     this.borderRadius,
     this.fillColor,
     this.hintStyle,
-
+    this.margin,
   });
 
   final String hintText;
@@ -41,7 +41,7 @@ class MyTextField extends StatelessWidget {
   final int? maxLength;
   final VoidCallback? onTap;
   final int? maxLines;
-  final int? minLines;
+
   final Widget? trailing;
   final Widget? leading;
   final Color? bordersColor;
@@ -58,29 +58,30 @@ class MyTextField extends StatelessWidget {
   final double? width;
   final double? borderRadius;
   final FontStyle? hintStyle;
-
+  final EdgeInsets? margin;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 7.0),
+      padding: margin ?? EdgeInsets.symmetric(vertical: 7.0),
       child: TextFormField(
-        style: TextStyle(color: textStyleColor ?? whiteColor, fontSize: 13),
+        style: TextStyle(color: textStyleColor ?? whiteColor, fontSize: 14),
         textInputAction: textInputAction,
         onFieldSubmitted: onFieldSubmitted,
         onTap: onTap,
-        minLines: minLines ?? 1,
+
         autofocus: autoFocus,
         validator: validation,
         maxLines: maxLines ?? 1,
         initialValue: defaultValue,
+        cursorHeight: 18,
         controller: controller,
         readOnly: readOnly,
         obscureText: isObscure,
         keyboardType: keyboardType,
         onChanged: onChanged,
         maxLength: maxLength,
-        cursorColor: blackColor,
+        cursorColor: whiteColor,
         decoration: InputDecoration(
           filled: true,
           fillColor: fillColor ?? whiteColor.withValues(alpha: 0.2),
@@ -89,17 +90,24 @@ class MyTextField extends StatelessWidget {
           prefixIcon: leading,
           counterText: '',
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: bordersColor ?? Colors.transparent),
-            borderRadius: BorderRadius.circular(25),
+            borderSide: BorderSide(
+              color: bordersColor ?? whiteColor.withValues(alpha: 0.3),
+            ),
+            borderRadius: BorderRadius.circular(borderRadius ?? 25),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: bordersColor ?? Colors.transparent),
-            borderRadius: BorderRadius.circular(25),
+            borderSide: BorderSide(
+              color: bordersColor ?? whiteColor.withValues(alpha: 0.3),
+            ),
+            borderRadius: BorderRadius.circular(borderRadius ?? 25),
           ),
           border: OutlineInputBorder(
-            borderSide: BorderSide(color: bordersColor ?? Colors.transparent),
-            borderRadius: BorderRadius.circular(25),
+            borderSide: BorderSide(
+              color: bordersColor ?? whiteColor.withValues(alpha: 0.3),
+            ),
+            borderRadius: BorderRadius.circular(borderRadius ?? 25),
           ),
+
           hintStyle: TextStyle(
             fontSize: 14,
             color: hintStyleColor ?? whiteColor.withValues(alpha: 0.8),

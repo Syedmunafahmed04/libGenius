@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Widgets/my_appbar.dart';
@@ -20,7 +21,10 @@ class _MyBooksState extends State<MyBooks> {
         padding: myPadding,
         child: Column(
           children: [
-            ListView.builder(
+            ListView.separated(
+              separatorBuilder: (context, index) {
+                return height(0.01);
+              },
               physics: NeverScrollableScrollPhysics(),
               itemCount: 10,
               shrinkWrap: true,
@@ -42,9 +46,9 @@ class _MyBooksState extends State<MyBooks> {
                         children: [
                           ClipOval(
                             child: Image.asset(
-                              'assets/book2.jpg',
-                              height: 40,
-                              width: 40,
+                              'assets/book2.jpeg',
+                              height: 50,
+                              width: 50,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -54,37 +58,69 @@ class _MyBooksState extends State<MyBooks> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
+                                width: Get.width * 0.3,
                                 padding: EdgeInsets.symmetric(
-                                  vertical: 1,
+                                  vertical: 3,
                                   horizontal: 8,
                                 ),
                                 decoration: BoxDecoration(
                                   color: mainThemeColor,
                                   borderRadius: BorderRadius.circular(15),
                                 ),
-                                child: FittedBox(
+                                child: Center(
                                   child: Text(
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
                                     'Sealed Necter',
                                     style: TextStyle(
                                       color: blackColor,
-                                      fontSize: 14,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ),
                               ),
-                              height(0.01),
-                              Text(
-                                'Safiur Rahman Mubarakpuri',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13,
-                                  color: whiteColor,
+                              height(0.005),
+                              SizedBox(
+                                width: Get.width * 0.5,
+                                child: Text(
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  'Safiur Rahman Mubarakpuri',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
+                                    color: whiteColor,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ],
                       ),
+                      index % 2 == 0 ? height(0.02) : SizedBox.shrink(),
+
+                      index % 2 == 0
+                          ? Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 1,
+                                horizontal: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.red.withValues(alpha: 0.5),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+
+                              child: Text(
+                                'Fined: 100 Rs',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 13,
+                                  color: whiteColor,
+                                ),
+                              ),
+                            )
+                          : SizedBox.shrink(),
 
                       height(0.02),
 
@@ -94,10 +130,10 @@ class _MyBooksState extends State<MyBooks> {
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: 1,
-                              horizontal: 8,
+                              horizontal: 10,
                             ),
                             decoration: BoxDecoration(
-                              color: mainThemeColor.withValues(alpha: 0.5),
+                              color: mainThemeColor.withValues(alpha: 0.3),
                               borderRadius: BorderRadius.circular(15),
                             ),
 
@@ -105,7 +141,7 @@ class _MyBooksState extends State<MyBooks> {
                               'Issued On: 01/10/2022',
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 13,
+                                fontSize: 12,
                                 color: whiteColor,
                               ),
                             ),
@@ -114,10 +150,10 @@ class _MyBooksState extends State<MyBooks> {
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: 1,
-                              horizontal: 8,
+                              horizontal: 10,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.red.withValues(alpha: 0.5),
+                              color: Colors.red.withValues(alpha: 0.3),
                               borderRadius: BorderRadius.circular(15),
                             ),
 
@@ -125,7 +161,7 @@ class _MyBooksState extends State<MyBooks> {
                               'Due Date: 15/10/2022',
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 13,
+                                fontSize: 12,
                                 color: whiteColor,
                               ),
                             ),
@@ -140,7 +176,8 @@ class _MyBooksState extends State<MyBooks> {
                         onTap: () {
                           mySuccessDialog(
                             title: 'Dropped Successfully!',
-                            subtitle: '',
+                            subtitle:
+                                'book has been dropped and will be against your account',
                           );
                         },
                       ),

@@ -17,7 +17,7 @@ class _MyHomeCardState extends State<MyHomeCard> {
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
-        width: Get.width * 0.45,
+        width: Get.width * 0.5,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
 
         decoration: BoxDecoration(
@@ -42,17 +42,20 @@ class _MyHomeCardState extends State<MyHomeCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
+                  width: Get.width * 0.3,
                   padding: EdgeInsets.symmetric(vertical: 1, horizontal: 8),
                   decoration: BoxDecoration(
                     color: mainThemeColor,
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: FittedBox(
+                  child: Center(
                     child: Text(
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                       'Sealed Necter',
                       style: TextStyle(
                         color: blackColor,
-                        fontSize: 13,
+                        fontSize: 12,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -70,7 +73,7 @@ class _MyHomeCardState extends State<MyHomeCard> {
                     ),
                     width(0.01),
                     Text(
-                      '(4.5)',
+                      '(4)',
                       style: TextStyle(color: whiteColor, fontSize: 12),
                     ),
                   ],
@@ -79,7 +82,7 @@ class _MyHomeCardState extends State<MyHomeCard> {
             ),
             height(0.005),
             SizedBox(
-              width: Get.width * 0.35,
+              width: Get.width * 0.4,
               child: Text(
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
@@ -91,20 +94,17 @@ class _MyHomeCardState extends State<MyHomeCard> {
                 ),
               ),
             ),
-            height(0.005),
-            SizedBox(
-              width: Get.width * 0.4,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Islamic History',
-                    style: TextStyle(color: whiteColor, fontSize: 13),
-                  ),
+            height(0.01),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Islamic History',
+                  style: TextStyle(color: whiteColor, fontSize: 13),
+                ),
 
-                  Icon(Icons.arrow_forward, size: 16, color: whiteColor),
-                ],
-              ),
+                Icon(Icons.arrow_forward, size: 16, color: whiteColor),
+              ],
             ),
           ],
         ),

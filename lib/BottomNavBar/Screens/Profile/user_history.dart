@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Widgets/my_appbar.dart';
@@ -13,6 +14,7 @@ class UserHistory extends StatefulWidget {
 class _UserHistoryState extends State<UserHistory> {
   List<PopupMenuItem<String>> popupItems = [
     PopupMenuItem(value: 'fines', child: Text('Sort By Fines')),
+    PopupMenuItem(value: 'reset', child: Text('Reset')),
   ];
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class _UserHistoryState extends State<UserHistory> {
 
         trailing: PopupMenuButton<String>(
           color: whiteColor,
+          iconColor: whiteColor,
           onSelected: (value) {
             myPrint(value);
           },
@@ -32,16 +35,26 @@ class _UserHistoryState extends State<UserHistory> {
         padding: myPadding,
         child: Column(
           children: [
-            Text(
-              'Only books issued within 3 months will be shown here',
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 12,
-                color: whiteColor,
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 1, horizontal: 10),
+              decoration: BoxDecoration(
+                color: Colors.yellow.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Text(
+                'Only books issued within 1 month will be shown here',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 13,
+                  color: whiteColor,
+                ),
               ),
             ),
-            height(0.02),
-            ListView.builder(
+            height(0.01),
+            ListView.separated(
+              separatorBuilder: (context, index) {
+                return height(0.01);
+              },
               physics: NeverScrollableScrollPhysics(),
               itemCount: 10,
               shrinkWrap: true,
@@ -63,9 +76,9 @@ class _UserHistoryState extends State<UserHistory> {
                         children: [
                           ClipOval(
                             child: Image.asset(
-                              'assets/book2.jpg',
-                              height: 40,
-                              width: 40,
+                              'assets/book2.jpeg',
+                              height: 50,
+                              width: 50,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -75,31 +88,40 @@ class _UserHistoryState extends State<UserHistory> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
+                                width: Get.width * 0.3,
                                 padding: EdgeInsets.symmetric(
-                                  vertical: 1,
+                                  vertical: 3,
                                   horizontal: 8,
                                 ),
                                 decoration: BoxDecoration(
                                   color: mainThemeColor,
                                   borderRadius: BorderRadius.circular(15),
                                 ),
-                                child: FittedBox(
+                                child: Center(
                                   child: Text(
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
                                     'Sealed Necter',
                                     style: TextStyle(
                                       color: blackColor,
-                                      fontSize: 14,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ),
                               ),
-                              height(0.01),
-                              Text(
-                                'Safiur Rahman Mubarakpuri',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13,
-                                  color: whiteColor,
+                              height(0.005),
+                              SizedBox(
+                                width: Get.width * 0.5,
+                                child: Text(
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  'Safiur Rahman Mubarakpuri',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
+                                    color: whiteColor,
+                                  ),
                                 ),
                               ),
                             ],
@@ -139,10 +161,10 @@ class _UserHistoryState extends State<UserHistory> {
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: 1,
-                              horizontal: 8,
+                              horizontal: 10,
                             ),
                             decoration: BoxDecoration(
-                              color: mainThemeColor.withValues(alpha: 0.5),
+                              color: mainThemeColor.withValues(alpha: 0.3),
                               borderRadius: BorderRadius.circular(15),
                             ),
 
@@ -150,7 +172,7 @@ class _UserHistoryState extends State<UserHistory> {
                               'Issued On: 01/10/2022',
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 13,
+                                fontSize: 12,
                                 color: whiteColor,
                               ),
                             ),
@@ -159,18 +181,18 @@ class _UserHistoryState extends State<UserHistory> {
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: 1,
-                              horizontal: 8,
+                              horizontal: 10,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.red.withValues(alpha: 0.5),
+                              color: Colors.red.withValues(alpha: 0.3),
                               borderRadius: BorderRadius.circular(15),
                             ),
 
                             child: Text(
-                              'Returned On: 01/10/2022',
+                              'Returned On: 15/10/2022',
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 13,
+                                fontSize: 12,
                                 color: whiteColor,
                               ),
                             ),

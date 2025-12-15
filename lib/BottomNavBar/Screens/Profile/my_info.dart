@@ -42,16 +42,16 @@ class _MyInfoState extends State<MyInfo> {
                         ? ClipOval(
                             child: Image.file(
                               uploadedImage!,
-                              height: 80,
-                              width: 80,
+                              height: 90,
+                              width: 90,
                               fit: BoxFit.cover,
                             ),
                           )
                         : ClipOval(
                             child: Image.asset(
-                              'assets/john.png',
-                              height: 60,
-                              width: 60,
+                              'assets/men.jpg',
+                              height: 90,
+                              width: 90,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -59,9 +59,9 @@ class _MyInfoState extends State<MyInfo> {
                 ),
 
                 Positioned(
-                  bottom: Get.height * 0.006,
+                  bottom: Get.height * 0.003,
 
-                  right: Get.width * 0.38,
+                  right: Get.width * 0.36,
                   child: GestureDetector(
                     onTap: () async {
                       await pickImage(ImageSource.gallery).then((value) {
@@ -71,29 +71,44 @@ class _MyInfoState extends State<MyInfo> {
                       });
                     },
                     child: CircleAvatar(
-                      radius: 10,
+                      radius: 12,
                       backgroundColor: mainThemeColor,
 
                       child: Image.asset(
                         'assets/edit2.png',
-                        height: 12,
-                        width: 12,
+                        height: 14,
+                        width: 14,
                       ),
                     ),
                   ),
                 ),
               ],
             ),
-            height(0.02),
-            Center(child: myDefaultText('John Doe')),
             height(0.01),
+            Text(
+              'Name',
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 13,
+                color: whiteColor,
+              ),
+            ),
+            Text(
+              'John Doe',
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 13,
+                color: greyColor,
+              ),
+            ),
+            height(0.02),
 
             Text(
               'CMS ID',
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 13,
-                color: blackColor,
+                color: whiteColor,
               ),
             ),
 
@@ -112,7 +127,7 @@ class _MyInfoState extends State<MyInfo> {
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 13,
-                color: blackColor,
+                color: whiteColor,
               ),
             ),
 
@@ -132,7 +147,7 @@ class _MyInfoState extends State<MyInfo> {
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 13,
-                color: blackColor,
+                color: whiteColor,
               ),
             ),
 
@@ -152,7 +167,7 @@ class _MyInfoState extends State<MyInfo> {
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 13,
-                color: blackColor,
+                color: whiteColor,
               ),
             ),
 

@@ -3,7 +3,6 @@ import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Widgets/my_appbar.dart';
 
-
 class PrivacyPolicy extends StatefulWidget {
   const PrivacyPolicy({super.key});
 
@@ -21,10 +20,13 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            height(0.02),
-
             Center(
-              child: Image.asset('assets/privacy.png', height: 60, width: 60),
+              child: Image.asset(
+                'assets/privacy.png',
+                height: 60,
+                width: 60,
+                color: whiteColor,
+              ),
             ),
 
             height(0.02),
@@ -33,7 +35,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               '''Worem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.''',
               textAlign: TextAlign.justify,
               style: TextStyle(
-                color: blackColor,
+                color: whiteColor,
                 fontWeight: FontWeight.w400,
                 fontSize: 13,
               ),

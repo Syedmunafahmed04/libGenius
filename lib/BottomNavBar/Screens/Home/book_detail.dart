@@ -124,14 +124,25 @@ class _BookDetailState extends State<BookDetail> {
                       ),
                     ],
                   ),
-                  height(0.01),
-                  Text(
-                    'Islamic History',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
+                  height(0.015),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Islamic History',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
 
-                      color: whiteColor.withValues(alpha: 0.8),
-                    ),
+                          color: whiteColor.withValues(alpha: 0.8),
+                        ),
+                      ),
+
+                      Icon(
+                        Icons.file_download_outlined,
+                        color: whiteColor,
+                        size: 25,
+                      ),
+                    ],
                   ),
                   height(0.01),
 
@@ -299,28 +310,29 @@ class _BookDetailState extends State<BookDetail> {
                 label: 'Rate',
                 onTap: () {
                   showModalBottomSheet(
+                    isScrollControlled: true,
                     context: context,
                     builder: (context) => Padding(
                       padding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom,
                       ),
-                      child: SingleChildScrollView(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: scaffoldBackgroundColor,
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(20),
-                            ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: scaffoldBackgroundColor,
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: 15),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 15),
 
-                          height: Get.height * 0.4,
+                        height: Get.height * 0.4,
 
+                        child: SingleChildScrollView(
                           child: Column(
                             children: [
                               height(0.01),
                               Text(
-                                'Rating',
+                                'Rate',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w700,
@@ -328,7 +340,7 @@ class _BookDetailState extends State<BookDetail> {
                                 ),
                               ),
 
-                              height(0.02),
+                              height(0.015),
 
                               RatingBar.builder(
                                 glow: false,
@@ -349,12 +361,13 @@ class _BookDetailState extends State<BookDetail> {
                               height(0.015),
 
                               MyTextField(
+                                borderRadius: 15,
+                                maxLines: 4,
                                 controller: ratingController,
-                                maxLines: 5,
 
-                                hintText: 'Type Your Text...',
+                                hintText: 'Write a review..',
                               ),
-                              height(0.01),
+                              height(0.05),
                               MyButton(
                                 label: 'Submit',
                                 onTap: () {
@@ -369,7 +382,6 @@ class _BookDetailState extends State<BookDetail> {
                                   );
                                 },
                               ),
-                              height(0.01),
                             ],
                           ),
                         ),

@@ -14,7 +14,6 @@ class BookFilter extends StatefulWidget {
 }
 
 class _BookFilterState extends State<BookFilter> {
-  final bookController = TextEditingController();
   final authorController = TextEditingController();
 
   final categoryController = TextEditingController();
@@ -31,16 +30,12 @@ class _BookFilterState extends State<BookFilter> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            myDefaultText('Search By Book'),
-            MyTextField(hintText: '', controller: bookController),
-            height(0.02),
-
             myDefaultText('Search By Author'),
-            MyTextField(hintText: '', controller: bookController),
+            MyTextField(hintText: '', controller: authorController),
             height(0.02),
 
             myDefaultText('Search By Category'),
-            MyTextField(hintText: '', controller: bookController),
+            MyTextField(hintText: '', controller: categoryController),
             height(0.02),
 
             myDefaultText('Search By Rating'),

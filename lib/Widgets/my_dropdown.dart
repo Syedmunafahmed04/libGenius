@@ -32,8 +32,8 @@ class MyDropDown extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             color: whiteColor.withValues(alpha: 0.2),
-            border: Border.all(color: whiteColor.withValues(alpha: 0.2)),
-            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: whiteColor.withValues(alpha: 0.3)),
+            borderRadius: BorderRadius.circular(25),
           ),
           child: DropdownButtonFormField(
             hint: Text(
@@ -41,7 +41,7 @@ class MyDropDown extends StatelessWidget {
               style: TextStyle(color: blackColor, fontSize: 14),
             ),
             style: TextStyle(color: blackColor, fontSize: 14),
-            dropdownColor: whiteColor,
+            dropdownColor: blackColor,
 
             onTap: onTap,
             validator: validation,

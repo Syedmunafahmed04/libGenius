@@ -86,7 +86,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     decoration: BoxDecoration(
                       color: whiteColor.withValues(alpha: 0.2),
-
+                      border: Border.all(
+                        color: whiteColor.withValues(alpha: 0.3),
+                      ),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(Icons.tune_outlined, color: whiteColor),
