@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:libgenius/Controllers/auth_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Widgets/my_appbar.dart';
@@ -20,7 +22,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
   bool showPass = true;
   bool showConfirmPass = true;
   final formKey = GlobalKey<FormState>();
-  // final authController = Get.put(AuthController());
+  final authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +110,9 @@ class _UpdatePasswordState extends State<UpdatePassword> {
                 ),
                 validation: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter confirm password';
+                    return 'Please confirm password';
+                  } else if (value != passwordController.text) {
+                    return 'Passwords do not match';
                   }
                   return null;
                 },
@@ -116,16 +120,14 @@ class _UpdatePasswordState extends State<UpdatePassword> {
               height(0.01),
               MyButton(
                 buttonColor: mainThemeColor,
-                label: "Update",
+                label: "Change Password",
                 onTap: () async {
-                  // if (formKey.currentState!.validate()) {
-                  //   await authController.resetPassword(
-                  //     currentPassword: currentPasswordController.text,
-                  //     password: passwordController.text,
-                  //     confirmPassword: confirmPasswordController.text,
-                  //     role: "update_password",
-                  //   );
-                  // }
+                  if (formKey.currentState!.validate()) {
+                    await authController.changePassword(
+                      currentPassword: currentPasswordController.text.trim(),
+                      newPassword: confirmPasswordController.text.trim(),
+                    );
+                  }
                 },
               ),
             ],

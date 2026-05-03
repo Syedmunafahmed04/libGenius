@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:libgenius/Auth/enter_otp.dart';
+import 'package:libgenius/Controllers/auth_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Widgets/my_body.dart';
@@ -15,8 +15,8 @@ class ForgetPassword extends StatefulWidget {
 }
 
 class _ForgetPasswordState extends State<ForgetPassword> {
-  final forgetEmailController = TextEditingController();
-  // final authController = Get.put(AuthController());
+  final emailController = TextEditingController();
+  final authController = Get.put(AuthController());
 
   final formKey = GlobalKey<FormState>();
 
@@ -40,24 +40,23 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 height(0.02),
                 MyTextField(
                   hintText: "Enter Email",
-                  controller: forgetEmailController,
+                  controller: emailController,
                   keyboardType: TextInputType.emailAddress,
-                  // validation: (value) {
-                  //   if (value!.isEmpty) {
-                  //     return "Please enter your email address";
-                  //   }
-                  //   return null;
-                  // },
+                  validation: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter your email address";
+                    }
+                    return null;
+                  },
                 ),
                 height(0.01),
                 MyButton(
                   onTap: () async {
-                    Get.to(() => EnterOtp());
-                    // if (formKey.currentState!.validate()) {
-                    //   authController.forgetPassword(
-                    //     email: forgetEmailController.text,
-                    //   );
-                    // }
+                    if (formKey.currentState!.validate()) {
+                      await authController.forgetPassword(
+                        email: emailController.text.trim(),
+                      );
+                    }
                   },
                   label: "Continue",
                 ),

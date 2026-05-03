@@ -37,9 +37,17 @@ dependencies:
   get: any
   google_nav_bar: ^5.0.7
   flutter_rating_bar: ^4.0.1
-  cached_network_image: ^3.4.1
-  shimmer: ^3.0.0
+  http: any
+  cached_network_image: any
+  intl: ^0.20.2
+  shimmer: any
+  url_launcher: any
+  photo_view: ^0.15.0
+  permission_handler: any
   image_picker: ^1.2.1
+  share_plus: ^7.2.0
+  path_provider: ^2.1.1
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:

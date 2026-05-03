@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:libgenius/Auth/forget_password.dart';
 import 'package:libgenius/Auth/sign_up.dart';
-import 'package:libgenius/BottomNavBar/my_bottom_bar.dart';
+import 'package:libgenius/Controllers/auth_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Widgets/my_body.dart';
@@ -22,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isObscure = true;
   bool remember = true;
   final formKey = GlobalKey<FormState>();
+  final authController=Get.put(AuthController());
 
   @override
   void initState() {
@@ -104,14 +105,13 @@ class _LoginPageState extends State<LoginPage> {
                 height(0.01),
                 MyButton(
                   onTap: () async {
-                    Get.to(() => MyBottomBar());
-                    // if (formKey.currentState!.validate()) {
-                    //   await authController.login(
-                    //     email: emailController.text,
-                    //     password: passwordController.text,
-                    //     remember: remember,
-                    //   );
-                    // }
+                    if (formKey.currentState!.validate()) {
+                      await authController.login(
+                        cms: cmsController.text.trim(),
+                        password: passwordController.text.trim(),
+                        isRemember: remember,
+                      );
+                    }
                   },
                   label: 'Login',
                 ),

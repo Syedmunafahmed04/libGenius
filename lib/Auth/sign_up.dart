@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:libgenius/Controllers/auth_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Widgets/my_body.dart';
@@ -14,7 +15,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  // final authController = Get.put(AuthController());
+  final authController = Get.put(AuthController());
   final cmsController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -95,6 +96,8 @@ class _SignUpState extends State<SignUp> {
                   validation: (value) {
                     if (value!.isEmpty) {
                       return 'Please confirm your password';
+                    } else if (value != passwordController.text) {
+                      return 'Passwords do not match';
                     }
                     return null;
                   },
@@ -120,23 +123,22 @@ class _SignUpState extends State<SignUp> {
                 height(0.02),
                 MyButton(
                   onTap: () async {
-                    // if (checkValue == false) {
-                    //   myWarningDialog(
-                    //     subtitle:
-                    //         "Please agree to our Privacy Policy and Terms of use",
-                    //     title: "Warning",
-                    //   );
-                    //   return;
-                    // }
-                    // if (formKey.currentState!.validate()) {
-                    //   authController.registration(
-                    //     role: "email",
-                    //     name: nameController.text,
-                    //     email: emailController.text,
-                    //     password: passwordController.text,
-                    //     confirmPassword: confirmPasswordController.text,
-                    //   );
-                    // }
+                    if (formKey.currentState!.validate()) {
+                    await  authController.register(
+                        cms: cmsController.text.trim(),
+                        email: emailController.text.trim(),
+                        password: confirmPasswordController.text.trim(),
+                      );
+                      return;
+                    }
+                    if (checkValue == false) {
+                      myWarningDialog(
+                        subtitle:
+                            "Please agree to our Privacy Policy and Terms of use",
+                        title: "Warning",
+                      );
+                      return;
+                    }
                   },
                   label: 'Sign Up',
                 ),

@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:libgenius/Controllers/auth_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Widgets/my_body.dart';
 import 'package:libgenius/Widgets/my_button.dart';
 import 'package:libgenius/Widgets/pin_input_field.dart';
 
-class EnterOtp extends StatefulWidget {
-  const EnterOtp({super.key, this.fromForget = false});
+class OtpScreen extends StatefulWidget {
+  const OtpScreen({super.key, this.fromForget = false, required this.email});
   final bool fromForget;
+  final String email;
 
   @override
-  State<EnterOtp> createState() => _EnterOtpState();
+  State<OtpScreen> createState() => _OtpScreenState();
 }
 
-class _EnterOtpState extends State<EnterOtp> {
+class _OtpScreenState extends State<OtpScreen> {
   final formKey = GlobalKey<FormState>();
+  final authController = Get.put(AuthController());
   late final List<TextEditingController> pins;
 
   @override
@@ -55,7 +59,7 @@ class _EnterOtpState extends State<EnterOtp> {
                 height(0.003),
                 Text(
                   "Please enter OTP that was sent to your email "
-                  "mun*********.com",
+                  "${widget.email}",
                   style: TextStyle(color: whiteColor),
                 ),
                 height(0.03),
@@ -78,23 +82,13 @@ class _EnterOtpState extends State<EnterOtp> {
                 height(0.03),
                 MyButton(
                   onTap: () async {
-                    // final String otp = pins.map((e) => e.text).join();
-                    // if (otp == userModel.value.user?.code) {
-                    //   widget.fromForget
-                    //       ? {
-                    //           myLoadingDialog(),
-                    //           Future.delayed(const Duration(seconds: 1), () {
-                    //             Get.back();
-                    //             Get.to(() => const ResetPassword());
-                    //           }),
-                    //         }
-                    //       : await authController.updateUserStatus();
-                    // } else {
-                    //   myWarningDialog(
-                    //     title: "Warning",
-                    //     subtitle: "Invalid OTP",
-                    //   );
-                    // }
+                    final String otp = pins.map((e) => e.text).join();
+
+                    if (widget.fromForget) {
+                      await authController.verifyForgetOtp(otp: otp);
+                    } else {
+                      await authController.verifyOtp(otp: otp);
+                    }
                   },
                   label: "Continue",
                 ),

@@ -3,8 +3,11 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:libgenius/Global/colors.dart';
+import 'package:libgenius/Models/user_model.dart';
+import 'package:libgenius/Widgets/loading_dialog.dart';
 import 'package:libgenius/Widgets/my_dialog.dart';
 
 height(height) {
@@ -15,6 +18,8 @@ width(width) {
   return SizedBox(width: width * Get.width);
 }
 
+GetStorage box = GetStorage();
+Rx<UserModel> userModel = UserModel().obs;
 const myPadding = EdgeInsets.all(10);
 const myPaddingTop = EdgeInsets.only(left: 15, right: 15, top: 15);
 const myPaddingBottom = EdgeInsets.only(left: 15, right: 15, bottom: 15);
@@ -30,6 +35,30 @@ final authHeadingStyle = TextStyle(
   fontSize: 20,
   color: whiteColor,
 );
+
+myLoadingDialog({String? title, bool showLoader = false}) {
+  showDialog(
+    barrierDismissible: showLoader,
+    context: Get.context!,
+    builder: (context) {
+      return LoadingDialog(message: title ?? "Loading");
+    },
+  );
+}
+
+mySnackBar({required String title, required String message, int duration = 1}) {
+  return Get.snackbar(
+    title,
+    message,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: mainThemeColor,
+    colorText: whiteColor,
+    animationDuration: Duration(seconds: duration),
+
+    margin: EdgeInsets.only(bottom: 10, left: 15, right: 15),
+    duration: Duration(seconds: 2),
+  );
+}
 
 Widget myDefaultText(String text, [double? fontSize]) {
   return Text(
