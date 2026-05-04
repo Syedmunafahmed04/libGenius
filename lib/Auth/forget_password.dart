@@ -15,7 +15,7 @@ class ForgetPassword extends StatefulWidget {
 }
 
 class _ForgetPasswordState extends State<ForgetPassword> {
-  final emailController = TextEditingController();
+  final cmsController = TextEditingController();
   final authController = Get.put(AuthController());
 
   final formKey = GlobalKey<FormState>();
@@ -40,8 +40,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 height(0.02),
                 MyTextField(
                   hintText: "Enter Email",
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
+                  controller: cmsController,
                   validation: (value) {
                     if (value!.isEmpty) {
                       return "Please enter your email address";
@@ -54,7 +53,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   onTap: () async {
                     if (formKey.currentState!.validate()) {
                       await authController.forgetPassword(
-                        email: emailController.text.trim(),
+                        cms: cmsController.text.trim(),
                       );
                     }
                   },

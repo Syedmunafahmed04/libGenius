@@ -32,7 +32,7 @@ class AuthController extends GetxController {
             message: "We've sent an OTP, Please check email for to verify.",
             duration: 2,
           );
-          Get.to(() => OtpScreen(email: userModel.value.studentData!.email!));
+          Get.to(() => OtpScreen());
         } else {
           isRemember ? box.write('user', userModel.value.toJson()) : null;
           Get.offAll(() => MyBottomBar());
@@ -64,7 +64,7 @@ class AuthController extends GetxController {
           message: "We've sent an OTP, Please check email to verify.",
           duration: 2,
         );
-        Get.to(() => OtpScreen(email: userModel.value.studentData!.email!));
+        Get.to(() => OtpScreen());
       } else {
         final msg = jsonDecode(value.split("error ").last);
         mySnackBar(title: 'Error', message: msg['error']);
@@ -118,8 +118,8 @@ class AuthController extends GetxController {
     });
   }
 
-  Future<void> forgetPassword({required String email}) async {
-    response.bodySetter = {'email': email};
+  Future<void> forgetPassword({required String cms}) async {
+    response.bodySetter = {'cms_id': cms};
     response.urlSetter = Api.forgetPasswordAPI;
     response.type = 'post';
 
@@ -132,7 +132,7 @@ class AuthController extends GetxController {
           message: "We've sent an OTP, Please check email to verify.",
           duration: 2,
         );
-        Get.to(() => OtpScreen(email: email, fromForget: true));
+        Get.to(() => OtpScreen(fromForget: true));
       } else {
         final msg = jsonDecode(value.split("error ").last);
         mySnackBar(title: 'Error', message: msg['error']);
