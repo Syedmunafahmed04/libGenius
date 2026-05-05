@@ -8,7 +8,7 @@ import 'package:libgenius/Widgets/my_button.dart';
 import 'package:libgenius/Widgets/pin_input_field.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key, this.fromForget = false, });
+  const OtpScreen({super.key, this.fromForget = false});
   final bool fromForget;
   // final String email;
 
@@ -58,8 +58,8 @@ class _OtpScreenState extends State<OtpScreen> {
                 Text('Verify your Email', style: authHeadingStyle),
                 height(0.003),
                 Text(
-                  "Please enter OTP that was sent to your email, linked with your cms",
-                  // "${widget.email}",
+                  "Please enter OTP that was sent to your email, linked with your cms ${userModel.value.studentData?.otp ?? ''}",
+
                   style: TextStyle(color: whiteColor),
                 ),
                 height(0.03),

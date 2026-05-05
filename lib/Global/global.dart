@@ -47,7 +47,7 @@ myLoadingDialog({String? title, bool showLoader = false}) {
 }
 
 mySnackBar({required String title, required String message, int duration = 1}) {
-  return Get.snackbar(
+  Get.snackbar(
     title,
     message,
     snackPosition: SnackPosition.BOTTOM,
@@ -94,7 +94,7 @@ Future<File?> pickImage([ImageSource? source]) async {
 mySuccessDialog({
   required String title,
   required String subtitle,
-  void Function()? ontap,
+  VoidCallback? ontap,
   String? btnTitle,
   bool showIcon = false,
   bool showSecondIcon = false,

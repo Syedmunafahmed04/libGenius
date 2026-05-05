@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:libgenius/Controllers/auth_controller.dart';
 import 'package:libgenius/Global/colors.dart';
+import 'package:libgenius/Global/global.dart';
 
 class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
   final bool isHome;
@@ -8,7 +10,7 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
   final bool isBack;
   final Widget? trailing;
 
-  const MyAppbar({
+  MyAppbar({
     super.key,
     this.isHome = false,
     this.title,
@@ -18,6 +20,7 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  final authConttroller = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -42,27 +45,29 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
           : SizedBox.shrink(),
 
       title: isHome
-          ? Column(
-              mainAxisSize: MainAxisSize.min,
+          ? Obx(
+              () => Column(
+                mainAxisSize: MainAxisSize.min,
 
-              children: [
-                Text(
-                  'Hello',
-                  style: TextStyle(
-                    color: whiteColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
+                children: [
+                  Text(
+                    'Hello',
+                    style: TextStyle(
+                      color: whiteColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
                   ),
-                ),
-                Text(
-                  'Syed Munaf Ahmed',
-                  style: TextStyle(
-                    color: whiteColor,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 15,
+                  Text(
+                    userModel.value.studentData?.studentName ?? '',
+                    style: TextStyle(
+                      color: whiteColor,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 15,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             )
           : Text(
               title!,

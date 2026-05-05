@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isObscure = true;
   bool remember = true;
   final formKey = GlobalKey<FormState>();
-  final authController=Get.put(AuthController());
+  final authController = Get.put(AuthController());
 
   @override
   void initState() {
@@ -45,10 +45,10 @@ class _LoginPageState extends State<LoginPage> {
                 MyTextField(
                   hintText: 'Enter CMS',
                   controller: cmsController,
-                  keyboardType: TextInputType.number,
+
                   validation: (value) {
                     if (value!.isEmpty) {
-                      return 'Please enter email address';
+                      return 'Please enter cms';
                     }
                     return null;
                   },
@@ -112,6 +112,8 @@ class _LoginPageState extends State<LoginPage> {
                         isRemember: remember,
                       );
                     }
+
+                   
                   },
                   label: 'Login',
                 ),

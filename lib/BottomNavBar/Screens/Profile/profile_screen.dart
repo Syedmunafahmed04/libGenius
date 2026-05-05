@@ -302,7 +302,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 myAlertDialog(
                   title: 'Logout',
                   content: 'Are you sure to logout',
-                  onTap: () {
+                  onTap: () async {
+                    Get.back();
+                    myLoadingDialog();
+
+                    await box.remove('user');
+                    await Future.delayed(Duration(seconds: 1));
+
                     Get.offAll(() => LoginPage());
                   },
                 );

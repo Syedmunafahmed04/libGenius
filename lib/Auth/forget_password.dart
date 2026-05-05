@@ -34,12 +34,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 Text('Forget Password', style: authHeadingStyle),
                 height(0.003),
                 Text(
-                  "Enter the email address associated with your account and we'll send you OTP to reset your password.",
+                  "Enter your CMS ID, an OTP will be sent to your registered email address.",
                   style: TextStyle(color: textLightColor),
                 ),
                 height(0.02),
                 MyTextField(
-                  hintText: "Enter Email",
+                  hintText: "Enter CMS ID",
                   controller: cmsController,
                   validation: (value) {
                     if (value!.isEmpty) {

@@ -27,7 +27,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppbar(title: 'Update Password'),
+      appBar: MyAppbar(title: 'Security'),
       body: SingleChildScrollView(
         padding: myPadding,
         child: Form(
@@ -120,7 +120,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
               height(0.01),
               MyButton(
                 buttonColor: mainThemeColor,
-                label: "Change Password",
+                label: "Update Password",
                 onTap: () async {
                   if (formKey.currentState!.validate()) {
                     await authController.changePassword(

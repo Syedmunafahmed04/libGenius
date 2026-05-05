@@ -29,7 +29,7 @@ class SuccessDialog extends StatelessWidget {
   final bool isTwoButton;
   final double? secondButtonWidth;
   final double? firstButtonWidth;
-  final void Function() ontap;
+  final VoidCallback ontap;
   final bool showIcon;
   final bool showSecondIcon;
 
@@ -127,7 +127,7 @@ class WarningDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 15),
-            Image.asset(image ?? 'assets/cooking.png', height: 80, width: 80),
+            // Image.asset(image ?? 'assets/warning.png', height: 80, width: 80),
             const SizedBox(height: 20),
             Center(
               child: Text(
