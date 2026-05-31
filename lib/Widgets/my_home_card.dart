@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
+import 'package:libgenius/Models/books_model.dart';
+import 'package:libgenius/Widgets/image_widget.dart';
+
 
 class MyHomeCard extends StatefulWidget {
   final VoidCallback onTap;
-  const MyHomeCard({super.key, required this.onTap});
+  final Book bookData;
+  const MyHomeCard({super.key, required this.onTap, required this.bookData});
 
   @override
   State<MyHomeCard> createState() => _MyHomeCardState();
@@ -14,6 +18,21 @@ class MyHomeCard extends StatefulWidget {
 class _MyHomeCardState extends State<MyHomeCard> {
   @override
   Widget build(BuildContext context) {
+       final ratings = widget.bookData.review
+        ?.map((e) => e.ratingStarNumber)
+        .toList();
+
+    int totalStars = 0;
+    double avgRatings = 0;
+
+    if (ratings != null) {
+      for (var rating in ratings) {
+        totalStars += rating!;
+      }
+      if (totalStars != 0) {
+        avgRatings = totalStars / ratings.length;
+      }
+    }
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
@@ -30,8 +49,8 @@ class _MyHomeCardState extends State<MyHomeCard> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                'assets/book.jpg',
+              child: ImageWidget(
+                url: '${widget.bookData.bookCoverPage}',
                 fit: BoxFit.cover,
                 height: Get.height * 0.12,
                 width: Get.width * 0.45,
@@ -52,7 +71,7 @@ class _MyHomeCardState extends State<MyHomeCard> {
                     child: Text(
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
-                      'Sealed Necter',
+                     widget.bookData.title??'N/A',
                       style: TextStyle(
                         color: blackColor,
                         fontSize: 12,
@@ -73,7 +92,7 @@ class _MyHomeCardState extends State<MyHomeCard> {
                     ),
                     width(0.01),
                     Text(
-                      '(4)',
+                      '($avgRatings)',
                       style: TextStyle(color: whiteColor, fontSize: 12),
                     ),
                   ],
@@ -86,7 +105,7 @@ class _MyHomeCardState extends State<MyHomeCard> {
               child: Text(
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
-                'Safiur Rahman Mubarakpuri',
+                widget.bookData.author??'N/A',
                 style: TextStyle(
                   color: Color(0XFFD6D8D8),
                   fontSize: 12,
@@ -99,7 +118,7 @@ class _MyHomeCardState extends State<MyHomeCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Islamic History',
+                  'Islamic History', //TODO
                   style: TextStyle(color: whiteColor, fontSize: 13),
                 ),
 

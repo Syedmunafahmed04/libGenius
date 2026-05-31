@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:libgenius/Global/global.dart';
 
 abstract class ApiService {
@@ -71,6 +72,19 @@ class ApiResponse extends ApiService {
           myPrint(response);
           return "error ${response.body}";
         }
+      } else if (type == 'put') {
+        final response = await http.put(
+          Uri.parse(_url!),
+          headers: headers ?? {},
+          body: _body ?? jsonEncode(_body2),
+        );
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          final data = response.body;
+          return data;
+        } else {
+          myPrint(response);
+          return "error ${response.body}";
+        }
       }
     } catch (e) {
       myPrint(e);
@@ -84,11 +98,24 @@ class ApiResponse extends ApiService {
       var request = http.MultipartRequest('$type', Uri.parse('$_url'));
       request.fields.addAll(_body ?? {});
       request.headers.addAll(headers ?? {});
-      file.isEmpty
-          ? null
-          : request.files.add(
-              await http.MultipartFile.fromPath(key ?? 'profile_picture', file),
-            );
+      if (file.isNotEmpty) {
+        final ext = file.split('.').last.toLowerCase();
+        final mimeTypes = {
+          'jpg': 'image/jpeg',
+          'jpeg': 'image/jpeg',
+          'png': 'image/png',
+          'gif': 'image/gif',
+          'webp': 'image/webp',
+        };
+        final mimeType = mimeTypes[ext] ?? 'image/jpeg';
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            key ?? 'profile_picture',
+            file,
+            contentType: MediaType.parse(mimeType),
+          ),
+        );
+      }
       http.StreamedResponse value = await request.send();
       final response = await http.Response.fromStream(value);
       if (response.statusCode == 200 || response.statusCode == 201) {

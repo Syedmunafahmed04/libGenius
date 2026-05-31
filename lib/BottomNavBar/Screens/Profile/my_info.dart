@@ -6,7 +6,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:libgenius/Controllers/auth_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
+import 'package:libgenius/Widgets/image_widget.dart';
 import 'package:libgenius/Widgets/my_appbar.dart';
+import 'package:libgenius/Widgets/my_button.dart';
 
 class MyInfo extends StatefulWidget {
   const MyInfo({super.key});
@@ -43,11 +45,7 @@ class _MyInfoState extends State<MyInfo> {
                           });
                         });
                       },
-                      child: 
-                      
-                      
-                      
-                      uploadedImage != null
+                      child: uploadedImage != null
                           ? ClipOval(
                               child: Image.file(
                                 uploadedImage!,
@@ -57,11 +55,10 @@ class _MyInfoState extends State<MyInfo> {
                               ),
                             )
                           : ClipOval(
-                              child: Image.asset(
-                                'assets/men.jpg',
+                              child: ImageWidget(
+                                url: data?.profilePictureUrl ?? '',
                                 height: 90,
                                 width: 90,
-                                fit: BoxFit.cover,
                               ),
                             ),
                     ),
@@ -206,6 +203,25 @@ class _MyInfoState extends State<MyInfo> {
                   fontSize: 13,
                   color: greyColor,
                 ),
+              ),
+
+              height(0.01),
+
+              MyButton(
+                label: 'Update',
+                onTap: () async {
+                  if (uploadedImage == null) {
+                    myWarningDialog(
+                      title: 'Error',
+                      subtitle: 'Please Upload Image',
+                    );
+                    return;
+                  }
+
+                  await authController.updateProfileImage(
+                    image: uploadedImage!.path,
+                  );
+                },
               ),
             ],
           ),

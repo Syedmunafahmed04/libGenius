@@ -2,6 +2,8 @@ class Api {
   static const String mainIP =
       'https://libgenius-api-production.up.railway.app';
   static const String baseAPI = '$mainIP/api';
+
+  //Auth
   static const String loginAPI = '$baseAPI/login';
   static const String signupAPI = '$baseAPI/signup';
   static const String verifyRegistration = '$baseAPI/verify';
@@ -10,4 +12,12 @@ class Api {
   static const String verifyForgetOtpAPI = '$baseAPI/verify-reset-otp';
   static const String resetPasswordAPI = '$baseAPI/reset-password';
   static const String changePasswordAPI = '$baseAPI/change-password';
+  static const String updateProfileAPI = '$baseAPI/edit-profile';
+
+  //Books
+  static const String booksAPI = '$baseAPI/get-books';
+  static const String bookReviewAPI = '$baseAPI/add-reviews';
+  static const String userHistoryAPI = '$baseAPI/my-issued-books/history';
+  static const String issueBookAPI = '$baseAPI/my-issued-books';
+  static const String dropBookAPI = '$baseAPI/drop-book';
 }

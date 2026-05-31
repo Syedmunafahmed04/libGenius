@@ -178,18 +178,22 @@ Future<dynamic> myAlertDialog({
       return AlertDialog(
         backgroundColor: whiteColor,
         elevation: 0,
-        title: Center(
-          child: Text(title, style: TextStyle(fontWeight: FontWeight.w600)),
+        title: Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
         ),
         content: Text(content),
         actions: [
           TextButton(
-            child: Text('No'),
+            child: Text('No', style: TextStyle(color: mainThemeColor)),
             onPressed: () {
               Get.back();
             },
           ),
-          TextButton(onPressed: onTap, child: Text('Yes')),
+          TextButton(
+            onPressed: onTap,
+            child: Text('Yes', style: TextStyle(color: Colors.red.shade800)),
+          ),
         ],
       );
     },

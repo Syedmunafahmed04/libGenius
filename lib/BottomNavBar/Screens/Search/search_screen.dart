@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:libgenius/BottomNavBar/Screens/Home/book_detail.dart';
 import 'package:libgenius/BottomNavBar/Screens/Search/book_filter.dart';
+import 'package:libgenius/Controllers/book_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Widgets/my_home_card.dart';
@@ -16,12 +17,16 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final searchController = TextEditingController();
+  final bookController = Get.put(BookController());
 
-  // final List<String> recents = ['Pizza', 'Burger', 'Cola', 'Paratha'];
+  Future<void> myInit() async {
+    await bookController.getBooks();
+  }
 
   @override
   void initState() {
     super.initState();
+    myInit();
   }
 
   @override
@@ -35,41 +40,11 @@ class _SearchScreenState extends State<SearchScreen> {
             padding: myPaddingTop,
             child: Row(
               children: [
-                // GestureDetector(
-                //   onTap: Get.back,
-
-                //   child: Container(
-                //     margin: EdgeInsets.only(right: 5),
-                //     padding: EdgeInsets.symmetric(vertical: 16, horizontal: 15),
-                //     decoration: BoxDecoration(
-                //       color: whiteColor,
-                //       boxShadow: [
-                //         BoxShadow(
-                //           blurRadius: 1,
-                //           offset: Offset(0, 1),
-                //           spreadRadius: 1,
-                //           color: blackColor.withValues(alpha: 0.1),
-                //         ),
-                //       ],
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     child:
-                //   Icon(Icons.arrow_back,color: whiteColor,)
-                //     // Image.asset('assets/back_arrow.png', scale: 1.8),
-
-                //   ),
-                // ),
                 Expanded(
                   child: MyTextField(
                     leading: Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
                       child: Icon(Icons.search, color: whiteColor),
-
-                      // Image.asset(
-                      //   'assets/search.png',
-                      //   height: 20,
-                      //   width: 20,
-                      // ),
                     ),
 
                     hintText: 'Search your book',
@@ -92,87 +67,50 @@ class _SearchScreenState extends State<SearchScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(Icons.tune_outlined, color: whiteColor),
-
-                    // Image.asset(
-                    //   'assets/filter.png',
-                    //   height: 25,
-                    //   width: 25,
-                    // ),
                   ),
                 ),
               ],
             ),
           ),
 
-          // recents.isEmpty
-          //     ? SizedBox()
-          //     : Padding(
-          //         padding: const EdgeInsets.symmetric(horizontal: 15),
-          //         child: Text('Recent Searches', style: categoriesHeadingStyle),
-          //       ),
-          // recents.isEmpty ? SizedBox() : height(0.01),
+          Obx(() {
+            final data = bookController.booksModel.value.books;
 
-          // ListView.builder(
-          //   physics: NeverScrollableScrollPhysics(),
-          //   shrinkWrap: true,
-          //   padding: EdgeInsets.symmetric(horizontal: 15),
-          //   itemCount: recents.length,
-          //   itemBuilder: (context, index) {
-          //     String recent = recents[index];
+            if (data == null) {
+              return Center(
+                child: CircularProgressIndicator(color: mainThemeColor),
+              );
+            }
 
-          //     return Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         Text(
-          //           recent,
-          //           style: TextStyle(
-          //             fontWeight: FontWeight.w400,
-          //             fontSize: 13,
-          //             color: greyColor,
-          //           ),
-          //         ),
+            if (data.isEmpty) {
+              return Center(child: Text('No Data Found'));
+            }
 
-          //         GestureDetector(
-          //           onTap: () {
-          //             setState(() {
-          //               recents.remove(recent);
-          //             });
-          //           },
-          //           child: Icon(Icons.close, color: greyColor, size: 18),
-          //         ),
-          //       ],
-          //     );
-          //   },
-          // ),
-          Expanded(
-            child: GridView.builder(
-              itemCount: 10,
-              shrinkWrap: true,
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                childAspectRatio: Get.height * 0.0011,
+            return Expanded(
+              child: GridView.builder(
+                itemCount: data.length,
+                shrinkWrap: true,
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  childAspectRatio: Get.height * 0.0011,
 
-                crossAxisCount: 2,
+                  crossAxisCount: 2,
+                ),
+                itemBuilder: (context, index) {
+                  final book = data[index];
+
+                  return MyHomeCard(
+                    bookData: book,
+                    onTap: () {
+                      Get.to(() => BookDetail(bookData: book));
+                    },
+                  );
+                },
               ),
-              itemBuilder: (context, index) {
-                // final item = allItems[index];
-                return MyHomeCard(
-                  onTap: () {
-                    Get.to(() => BookDetail());
-                  },
-                );
-
-                // MyMenuGridCard(
-                //   item: item,
-                //   onTap: () {
-                //     Get.to(() => MenuDetail());
-                //   },
-                // );
-              },
-            ),
-          ),
+            );
+          }),
         ],
       ),
     );

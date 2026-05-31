@@ -151,7 +151,7 @@ class WarningDialog extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            MyButton(label: btnTitle ?? 'Done', onTap: ontap),
+            MyButton(label: btnTitle ?? 'Continue', onTap: ontap),
             const SizedBox(height: 15),
           ],
         ),

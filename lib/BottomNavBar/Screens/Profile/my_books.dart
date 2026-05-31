@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:libgenius/Controllers/book_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
+import 'package:libgenius/Widgets/image_widget.dart';
 import 'package:libgenius/Widgets/my_appbar.dart';
 import 'package:libgenius/Widgets/my_button.dart';
 
@@ -13,182 +16,212 @@ class MyBooks extends StatefulWidget {
 }
 
 class _MyBooksState extends State<MyBooks> {
+  final bookController = Get.put(BookController());
+
+  Future<void> getBooks() async {
+    await bookController.getIssuedBooks();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getBooks();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppbar(title: 'My Books'),
-      body: SingleChildScrollView(
-        padding: myPadding,
-        child: Column(
-          children: [
-            ListView.separated(
-              separatorBuilder: (context, index) {
-                return height(0.01);
-              },
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: 10,
-              shrinkWrap: true,
-              padding: EdgeInsets.all(0),
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: myPadding,
-                  decoration: BoxDecoration(
-                    color: Color(0XFF313B3A),
+      body: Obx(() {
+        final data = bookController.issueModel.value.issuedBooks;
 
-                    borderRadius: BorderRadius.circular(15),
-                  ),
+        if (data == null) {
+          return Center(
+            child: CircularProgressIndicator(color: mainThemeColor),
+          );
+        }
 
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipOval(
-                            child: Image.asset(
-                              'assets/book2.jpeg',
-                              height: 50,
-                              width: 50,
-                              fit: BoxFit.cover,
-                            ),
+        if (data.isEmpty) {
+          return Center(child: myDefaultText('No Issued Books Found'));
+        }
+        return SingleChildScrollView(
+          padding: myPadding,
+          child: ListView.separated(
+            separatorBuilder: (context, index) {
+              return height(0.01);
+            },
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: data.length,
+            shrinkWrap: true,
+            padding: EdgeInsets.all(0),
+            itemBuilder: (context, index) {
+              final item = data[index];
+              return Container(
+                padding: myPadding,
+                decoration: BoxDecoration(
+                  color: Color(0XFF313B3A),
+
+                  borderRadius: BorderRadius.circular(15),
+                ),
+
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipOval(
+                          child: ImageWidget(
+                            url: item.book?.bookCoverPage ?? '',
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
                           ),
-                          width(0.02),
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: Get.width * 0.3,
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 3,
-                                  horizontal: 8,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: mainThemeColor,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    'Sealed Necter',
-                                    style: TextStyle(
-                                      color: blackColor,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              height(0.005),
-                              SizedBox(
-                                width: Get.width * 0.5,
-                                child: Text(
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  'Safiur Rahman Mubarakpuri',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 13,
-                                    color: whiteColor,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      index % 2 == 0 ? height(0.02) : SizedBox.shrink(),
-
-                      index % 2 == 0
-                          ? Container(
+                        ),
+                        width(0.02),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: Get.width * 0.3,
                               padding: EdgeInsets.symmetric(
-                                vertical: 1,
+                                vertical: 3,
                                 horizontal: 8,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.red.withValues(alpha: 0.5),
+                                color: mainThemeColor,
                                 borderRadius: BorderRadius.circular(15),
                               ),
-
+                              child: Center(
+                                child: Text(
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  item.book?.title ?? 'N/A',
+                                  style: TextStyle(
+                                    color: blackColor,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            height(0.005),
+                            SizedBox(
+                              width: Get.width * 0.5,
                               child: Text(
-                                'Fined: 100 Rs',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                item.book?.author ?? 'N/A',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 13,
                                   color: whiteColor,
                                 ),
                               ),
-                            )
-                          : SizedBox.shrink(),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    item.fine!.fineAmount! > 0
+                        ? height(0.02)
+                        : SizedBox.shrink(),
 
-                      height(0.02),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
+                    item.fine!.fineAmount! > 0
+                        ? Container(
                             padding: EdgeInsets.symmetric(
                               vertical: 1,
-                              horizontal: 10,
+                              horizontal: 8,
                             ),
                             decoration: BoxDecoration(
-                              color: mainThemeColor.withValues(alpha: 0.3),
+                              color: Colors.red.withValues(alpha: 0.5),
                               borderRadius: BorderRadius.circular(15),
                             ),
 
                             child: Text(
-                              'Issued On: 01/10/2022',
+                              'Fined: ${item.fine!.fineAmount} Rs',
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 12,
+                                fontSize: 13,
                                 color: whiteColor,
                               ),
                             ),
+                          )
+                        : SizedBox.shrink(),
+
+                    height(0.02),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 1,
+                            horizontal: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: mainThemeColor.withValues(alpha: 0.3),
+                            borderRadius: BorderRadius.circular(15),
                           ),
 
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 1,
-                              horizontal: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.red.withValues(alpha: 0.3),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-
-                            child: Text(
-                              'Due Date: 15/10/2022',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                                color: whiteColor,
-                              ),
+                          child: Text(
+                            'Issued On: ${DateFormat('dd-MM-yyyy').format(item.issueDate!)}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              color: whiteColor,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
 
-                      height(0.02),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 1,
+                            horizontal: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.red.withValues(alpha: 0.3),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
 
-                      MyButton(
-                        label: 'Drop Book',
-                        onTap: () {
-                          mySuccessDialog(
-                            title: 'Dropped Successfully!',
-                            subtitle:
-                                'book has been dropped and will be against your account',
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+                          child: Text(
+                            'Due Date: ${DateFormat('dd-MM-yyyy').format(item.dueDate!)}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              color: whiteColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    height(0.02),
+
+                    MyButton(
+                      buttonColor: Colors.red.shade900,
+                      fontSize: 14,
+                      label: 'Drop Book',
+                      onTap: () {
+                        myAlertDialog(
+                          title: 'Drop Book',
+                          content:
+                              'Are you sure to drop ${item.book?.title ?? 'N/A'} ?',
+                          onTap: () {
+                            Get.back();
+                           
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      }),
     );
   }
 }

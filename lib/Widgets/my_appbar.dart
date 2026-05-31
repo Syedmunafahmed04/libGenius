@@ -27,7 +27,7 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: greyColor.withValues(alpha: 0.15),
 
-      surfaceTintColor: greyColor.withValues(alpha: 0.15),
+      surfaceTintColor: Colors.transparent,
 
       leading: isHome
           ? SizedBox.shrink()
@@ -51,7 +51,7 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
 
                 children: [
                   Text(
-                    'Hello',
+                    'Welcome',
                     style: TextStyle(
                       color: whiteColor,
                       fontWeight: FontWeight.w600,
@@ -74,7 +74,7 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
               style: TextStyle(
                 color: whiteColor,
                 fontWeight: FontWeight.w800,
-                fontSize: 18,
+                fontSize: 16,
               ),
             ),
 

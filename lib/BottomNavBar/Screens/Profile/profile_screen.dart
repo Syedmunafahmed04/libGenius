@@ -8,8 +8,10 @@ import 'package:libgenius/BottomNavBar/Screens/Profile/my_info.dart';
 import 'package:libgenius/BottomNavBar/Screens/Profile/privacy_policy.dart';
 import 'package:libgenius/BottomNavBar/Screens/Profile/terms_conditions.dart';
 import 'package:libgenius/BottomNavBar/Screens/Profile/user_history.dart';
+import 'package:libgenius/Controllers/auth_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
+import 'package:libgenius/Widgets/image_widget.dart';
 import 'package:libgenius/Widgets/my_appbar.dart';
 import 'package:libgenius/Widgets/my_button.dart';
 
@@ -21,6 +23,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final authController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,17 +33,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: myPadding,
         child: Column(
           children: [
-            Center(
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/men.jpg',
-                  height: 90,
-                  width: 90,
-                  fit: BoxFit.cover,
+            Obx(
+              () => Center(
+                child: ClipOval(
+                  child: ImageWidget(
+                    url: userModel.value.studentData?.profilePictureUrl ?? '',
+                    height: 90,
+                    width: 90,
+                  ),
                 ),
               ),
             ),
-
             height(0.01),
 
             Card(
