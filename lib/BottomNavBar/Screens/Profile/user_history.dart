@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:libgenius/Controllers/book_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
+import 'package:libgenius/Widgets/image_widget.dart';
 import 'package:libgenius/Widgets/my_appbar.dart';
 
 class UserHistory extends StatefulWidget {
@@ -36,14 +37,14 @@ class _UserHistoryState extends State<UserHistory> {
       appBar: MyAppbar(
         title: 'My History',
 
-        trailing: PopupMenuButton<String>(
-          color: whiteColor,
-          iconColor: whiteColor,
-          onSelected: (value) {
-            myPrint(value);
-          },
-          itemBuilder: (context) => popupItems,
-        ),
+        // trailing: PopupMenuButton<String>(
+        //   color: whiteColor,
+        //   iconColor: whiteColor,
+        //   onSelected: (value) {
+        //     myPrint(value);
+        //   },
+        //   itemBuilder: (context) => popupItems,
+        // ),
       ),
 
       body: Obx(() {
@@ -67,22 +68,22 @@ class _UserHistoryState extends State<UserHistory> {
           padding: myPadding,
           child: Column(
             children: [
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 1, horizontal: 10),
-                decoration: BoxDecoration(
-                  color: Colors.yellow.withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Text(
-                  'Only books issued within 1 month will be shown here',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 13,
-                    color: whiteColor,
-                  ),
-                ),
-              ),
-              height(0.01),
+              // Container(
+              //   padding: EdgeInsets.symmetric(vertical: 1, horizontal: 10),
+              //   decoration: BoxDecoration(
+              //     color: Colors.yellow.withValues(alpha: 0.3),
+              //     borderRadius: BorderRadius.circular(15),
+              //   ),
+              //   child: Text(
+              //     'Only books issued within 1 month will be shown here',
+              //     style: TextStyle(
+              //       fontWeight: FontWeight.w400,
+              //       fontSize: 13,
+              //       color: whiteColor,
+              //     ),
+              //   ),
+              // ),
+              // height(0.01),
               ListView.separated(
                 separatorBuilder: (context, index) {
                   return height(0.01);
@@ -108,11 +109,10 @@ class _UserHistoryState extends State<UserHistory> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ClipOval(
-                              child: Image.asset(
-                                'assets/book2.jpeg',
+                              child: ImageWidget(
+                                url: item.book?.bookCoverPage ?? '',
                                 height: 50,
                                 width: 50,
-                                fit: BoxFit.cover,
                               ),
                             ),
                             width(0.02),
@@ -161,9 +161,11 @@ class _UserHistoryState extends State<UserHistory> {
                           ],
                         ),
 
-                        index % 2 == 0 ? height(0.02) : SizedBox.shrink(),
+                        item.fine?.fineAmount != 0
+                            ? height(0.02)
+                            : SizedBox.shrink(),
 
-                        index % 2 == 0
+                        item.fine?.fineAmount != 0
                             ? Container(
                                 padding: EdgeInsets.symmetric(
                                   vertical: 1,
@@ -175,7 +177,7 @@ class _UserHistoryState extends State<UserHistory> {
                                 ),
 
                                 child: Text(
-                                  'Fined: 100 Rs',
+                                  'Fined: ${item.fine?.fineAmount} Rs',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 13,
@@ -221,7 +223,9 @@ class _UserHistoryState extends State<UserHistory> {
                               ),
 
                               child: Text(
-                                'Returned On: 15/10/2022',
+                                item.returnDate == null
+                                    ? 'Not Returned'
+                                    : 'Returned On: ${DateFormat('dd MMM, yyyy').format(item.returnDate ?? DateTime.now())}',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 12,

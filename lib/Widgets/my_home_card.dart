@@ -5,7 +5,6 @@ import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Models/books_model.dart';
 import 'package:libgenius/Widgets/image_widget.dart';
 
-
 class MyHomeCard extends StatefulWidget {
   final VoidCallback onTap;
   final Book bookData;
@@ -18,21 +17,7 @@ class MyHomeCard extends StatefulWidget {
 class _MyHomeCardState extends State<MyHomeCard> {
   @override
   Widget build(BuildContext context) {
-       final ratings = widget.bookData.review
-        ?.map((e) => e.ratingStarNumber)
-        .toList();
-
-    int totalStars = 0;
-    double avgRatings = 0;
-
-    if (ratings != null) {
-      for (var rating in ratings) {
-        totalStars += rating!;
-      }
-      if (totalStars != 0) {
-        avgRatings = totalStars / ratings.length;
-      }
-    }
+    final avgRatings = widget.bookData.averageRating;
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
@@ -71,7 +56,7 @@ class _MyHomeCardState extends State<MyHomeCard> {
                     child: Text(
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
-                     widget.bookData.title??'N/A',
+                      widget.bookData.title ?? 'N/A',
                       style: TextStyle(
                         color: blackColor,
                         fontSize: 12,
@@ -105,7 +90,7 @@ class _MyHomeCardState extends State<MyHomeCard> {
               child: Text(
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
-                widget.bookData.author??'N/A',
+                widget.bookData.author ?? 'N/A',
                 style: TextStyle(
                   color: Color(0XFFD6D8D8),
                   fontSize: 12,
@@ -118,7 +103,7 @@ class _MyHomeCardState extends State<MyHomeCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Islamic History', //TODO
+                  widget.bookData.category?.categoryName ?? 'N/A',
                   style: TextStyle(color: whiteColor, fontSize: 13),
                 ),
 

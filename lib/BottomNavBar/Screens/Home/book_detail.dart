@@ -23,29 +23,19 @@ class _BookDetailState extends State<BookDetail> {
   final bookController = Get.put(BookController());
   final formKey = GlobalKey<FormState>();
   int reviewStars = 0;
+
+  Future<void> myInit() async {
+    await bookController.getReviews(bookId: widget.bookData.bookId.toString());
+  }
+
   @override
   void initState() {
     super.initState();
+    myInit();
   }
 
   @override
   Widget build(BuildContext context) {
-    final ratings = widget.bookData.review
-        ?.map((e) => e.ratingStarNumber)
-        .toList();
-
-    int totalStars = 0;
-    double avgRatings = 0;
-
-    if (ratings != null) {
-      for (var rating in ratings) {
-        totalStars += rating!;
-      }
-      if (totalStars != 0) {
-        avgRatings = totalStars / ratings.length;
-      }
-    }
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -128,60 +118,70 @@ class _BookDetailState extends State<BookDetail> {
                           color: whiteColor.withValues(alpha: 0.7),
                         ),
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
 
-                        children: [
-                          Text.rich(
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: whiteColor.withValues(alpha: 0.7),
-                            ),
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'Reviews',
-                                  style: TextStyle(
-                                    // fontFamily: poppins,
-                                    decoration: TextDecoration.underline,
-                                    decorationColor: whiteColor.withValues(
-                                      alpha: 0.7,
+                      Obx(
+                        () => Row(
+                          mainAxisSize: MainAxisSize.min,
+
+                          children: [
+                            Text.rich(
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: whiteColor.withValues(alpha: 0.7),
+                              ),
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Reviews',
+                                    style: TextStyle(
+                                      // fontFamily: poppins,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: whiteColor.withValues(
+                                        alpha: 0.7,
+                                      ),
+
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: whiteColor.withValues(alpha: 0.7),
                                     ),
-
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: whiteColor.withValues(alpha: 0.7),
                                   ),
-                                ),
 
-                                TextSpan(
-                                  text:
-                                      '(${widget.bookData.review?.length ?? '0'})',
-                                ),
-                              ],
+                                  TextSpan(
+                                    text:
+                                        bookController
+                                                .bookReviewsModel
+                                                .value
+                                                .reviews
+                                                ?.length ==
+                                            0
+                                        ? '(0)'
+                                        : ' (${bookController.bookReviewsModel.value.reviews?.length ?? '...'})',
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          width(0.01),
+                            width(0.01),
 
-                          Icon(
-                            Icons.star_rounded,
-                            color: Color(0xffFFA600),
-                            size: 15,
-                          ),
-
-                          width(0.01),
-
-                          Text(
-                            '$avgRatings',
-                            style: TextStyle(
-                              // fontFamily: poppins,
-                              fontWeight: FontWeight.w600,
-                              color: whiteColor,
-                              fontSize: 13,
+                            Icon(
+                              Icons.star_rounded,
+                              color: Color(0xffFFA600),
+                              size: 15,
                             ),
-                          ),
-                        ],
+
+                            width(0.01),
+
+                            Text(
+                              '${bookController.bookReviewsModel.value.averageRating ?? '...'}',
+                              style: TextStyle(
+                                // fontFamily: poppins,
+                                fontWeight: FontWeight.w600,
+                                color: whiteColor,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -190,7 +190,7 @@ class _BookDetailState extends State<BookDetail> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Islamic History', //TODO
+                        'Genre: ${widget.bookData.category?.categoryName ?? 'N/A'}',
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
 
@@ -268,110 +268,129 @@ class _BookDetailState extends State<BookDetail> {
                 ],
               ),
             ),
+            height(0.02),
+            Obx(() {
+              final data = bookController.bookReviewsModel.value.reviews;
 
-            height(0.01),
-            widget.bookData.review?.length == 0
-                ? SizedBox.shrink()
-                : ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) {
-                      return height(0.01);
-                    },
-                    itemCount: widget.bookData.review!.length,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (context, index) {
-                      final review = widget.bookData.review![index];
-                      return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 15),
-                        padding: myPadding,
-                        decoration: BoxDecoration(
-                          color: boxColor,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+              if (data == null) {
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 50),
+                    child: CircularProgressIndicator(color: mainThemeColor),
+                  ),
+                );
+              }
+
+              if (data.isEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: Center(
+                    child: myDefaultText('No Reviews Available', 13),
+                  ),
+                );
+              }
+
+              return ListView.separated(
+                physics: NeverScrollableScrollPhysics(),
+                separatorBuilder: (context, index) {
+                  return height(0.01);
+                },
+                itemCount: data.length,
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                itemBuilder: (context, index) {
+                  final review = data[index];
+                  return Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15),
+                    padding: myPadding,
+                    decoration: BoxDecoration(
+                      color: boxColor,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           children: [
-                            Row(
+                            ClipOval(
+                              child: ImageWidget(
+                                url: '${review.users?.profilePictureUrl}',
+                                height: 50,
+                                width: 50,
+                              ),
+                            ),
+                            width(0.015),
+
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ClipOval(
-                                  child: ImageWidget(
-                                    url: '${review.users?.profilePictureUrl}',
-                                    height: 50,
-                                    width: 50,
+                                Text(
+                                  review.users?.studentName ?? 'N/A',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15,
+                                    color: whiteColor.withValues(alpha: 0.7),
                                   ),
                                 ),
-                                width(0.015),
-
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
+                                    RatingBar.builder(
+                                      allowHalfRating: false,
+                                      initialRating: double.parse(
+                                        review.ratingStarNumber.toString(),
+                                      ),
+                                      ignoreGestures: true,
+                                      glow: false,
+                                      itemSize: 16,
+                                      itemPadding: EdgeInsets.zero,
+                                      minRating: 1,
+                                      unratedColor: Color(0xffD9D9D9),
+                                      onRatingUpdate: (value) {},
+                                      itemBuilder: (context, index) {
+                                        return Icon(
+                                          Icons.star_rounded,
+                                          color: Color(0xffFFA600),
+                                        );
+                                      },
+                                    ),
+
+                                    width(0.01),
+
                                     Text(
-                                      review.users?.studentName ?? 'N/A',
+                                      '(${review.ratingStarNumber})',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 15,
+                                        fontSize: 12,
                                         color: whiteColor.withValues(
-                                          alpha: 0.7,
+                                          alpha: 0.6,
                                         ),
                                       ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        RatingBar.builder(
-                                          allowHalfRating: false,
-                                          initialRating: double.parse(
-                                            review.ratingStarNumber.toString(),
-                                          ),
-                                          ignoreGestures: true,
-                                          glow: false,
-                                          itemSize: 16,
-                                          itemPadding: EdgeInsets.zero,
-                                          minRating: 1,
-                                          unratedColor: Color(0xffD9D9D9),
-                                          onRatingUpdate: (value) {},
-                                          itemBuilder: (context, index) {
-                                            return Icon(
-                                              Icons.star_rounded,
-                                              color: Color(0xffFFA600),
-                                            );
-                                          },
-                                        ),
-
-                                        width(0.01),
-
-                                        Text(
-                                          '(${review.ratingStarNumber})',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12,
-                                            color: whiteColor.withValues(
-                                              alpha: 0.6,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
                                     ),
                                   ],
                                 ),
                               ],
                             ),
-
-                            height(0.01),
-
-                            Text(
-                              review.ratingDescription ?? 'N/A',
-                              style: TextStyle(
-                                color: greyColor,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 13,
-                              ),
-                            ),
                           ],
                         ),
-                      );
-                    },
-                  ),
+
+                        height(0.01),
+
+                        Text(
+                          review.ratingDescription ?? 'N/A',
+                          style: TextStyle(
+                            color: greyColor,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }),
+
+            height(0.01),
 
             // height(0.03),
             // Padding(
@@ -397,108 +416,129 @@ class _BookDetailState extends State<BookDetail> {
             // ),
             height(0.01),
 
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: MyButton(
-                label: 'Rate',
-                onTap: () {
-                  showModalBottomSheet(
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (context) => Padding(
-                      padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom,
-                      ),
-                      child: StatefulBuilder(
-                        builder: (context, state) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: scaffoldBackgroundColor,
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(20),
-                              ),
-                            ),
-                            padding: EdgeInsets.symmetric(horizontal: 15),
+            Obx(() {
+              final data = bookController.bookReviewsModel.value.reviews;
+              bool hasReviewed = false;
 
-                            height: Get.height * 0.4,
+              if (data == null) {
+                return SizedBox.shrink();
+              }
 
-                            child: SingleChildScrollView(
-                              child: Form(
-                                key: formKey,
-                                child: Column(
-                                  children: [
-                                    height(0.01),
-                                    Text(
-                                      'Rate',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700,
-                                        color: whiteColor,
-                                      ),
-                                    ),
+              if (data.isNotEmpty) {
+                hasReviewed = data.any(
+                  (e) => e.userId == userModel.value.studentData?.userId,
+                );
+              }
 
-                                    height(0.015),
-
-                                    RatingBar.builder(
-                                      glow: false,
-                                      allowHalfRating: false,
-                                      itemSize: 35,
-
-                                      minRating: 1,
-                                      unratedColor: Color(0xffD9D9D9),
-                                      onRatingUpdate: (value) {
-                                        reviewStars = value.toInt();
-
-                                        myPrint(reviewStars);
-                                      },
-                                      itemBuilder: (context, index) {
-                                        return Icon(
-                                          Icons.star_rounded,
-
-                                          color: Color(0xffFFA600),
-                                        );
-                                      },
-                                    ),
-                                    height(0.015),
-
-                                    MyTextField(
-                                      borderRadius: 15,
-                                      maxLines: 4,
-                                      controller: ratingController,
-                                      validation: (p0) {
-                                        if (p0!.isEmpty) {
-                                          return 'Please enter a review';
-                                        }
-                                        return null;
-                                      },
-                                      hintText: 'Write a review..',
-                                    ),
-                                    height(0.01),
-                                    MyButton(
-                                      label: 'Submit',
-                                      onTap: () async {
-                                        if (formKey.currentState!.validate()) {
-                                          bookController.submitReview(
-                                            bookId: widget.bookData.bookId
-                                                .toString(),
-                                            ratings: reviewStars.toString(),
-                                            reviews: ratingController.text,
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ],
+              if (hasReviewed == false) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: MyButton(
+                    label: 'Rate',
+                    onTap: () {
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) => Padding(
+                          padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom,
+                          ),
+                          child: StatefulBuilder(
+                            builder: (context, state) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: scaffoldBackgroundColor,
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+                                padding: EdgeInsets.symmetric(horizontal: 15),
+
+                                height: Get.height * 0.4,
+
+                                child: SingleChildScrollView(
+                                  child: Form(
+                                    key: formKey,
+                                    child: Column(
+                                      children: [
+                                        height(0.01),
+                                        Text(
+                                          'Rate',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700,
+                                            color: whiteColor,
+                                          ),
+                                        ),
+
+                                        height(0.015),
+
+                                        RatingBar.builder(
+                                          glow: false,
+                                          allowHalfRating: false,
+                                          itemSize: 35,
+
+                                          minRating: 1,
+                                          unratedColor: Color(0xffD9D9D9),
+                                          onRatingUpdate: (value) {
+                                            reviewStars = value.toInt();
+
+                                            myPrint(reviewStars);
+                                          },
+                                          itemBuilder: (context, index) {
+                                            return Icon(
+                                              Icons.star_rounded,
+
+                                              color: Color(0xffFFA600),
+                                            );
+                                          },
+                                        ),
+                                        height(0.015),
+
+                                        MyTextField(
+                                          borderRadius: 15,
+                                          maxLines: 4,
+                                          controller: ratingController,
+                                          validation: (p0) {
+                                            if (p0!.isEmpty) {
+                                              return 'Please enter a review';
+                                            }
+                                            return null;
+                                          },
+                                          hintText: 'Write a review..',
+                                        ),
+                                        height(0.01),
+                                        MyButton(
+                                          label: 'Submit',
+                                          onTap: () async {
+                                            if (formKey.currentState!
+                                                .validate()) {
+                                              Get.back();
+                                              bookController.submitReview(
+                                                bookId: widget.bookData.bookId
+                                                    .toString(),
+                                                ratings: reviewStars.toString(),
+                                                reviews: ratingController.text,
+                                              );
+                                            }
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }
+
+              return SizedBox.shrink();
+            }),
           ],
         ),
       ),

@@ -37,11 +37,13 @@ class Book {
     final String? bookCoverPage;
     final int? bookId;
     final String? bookPdfUrl;
+    final Category? category;
     final int? categoryId;
     final String? description;
+    final String? embedding;
     final String? isbn;
     final String? language;
-    final int? publishYear;
+    final String? publishYear;
     final String? publisherName;
     final int? quantity;
     final List<Review>? review;
@@ -54,8 +56,10 @@ class Book {
         this.bookCoverPage,
         this.bookId,
         this.bookPdfUrl,
+        this.category,
         this.categoryId,
         this.description,
+        this.embedding,
         this.isbn,
         this.language,
         this.publishYear,
@@ -67,13 +71,28 @@ class Book {
         this.title,
     });
 
+    double get averageRating {
+        if (review == null || review!.isEmpty) return 0.0;
+        int totalStars = 0;
+        int count = 0;
+        for (var r in review!) {
+            if (r.ratingStarNumber != null) {
+                totalStars += r.ratingStarNumber!;
+                count++;
+            }
+        }
+        return count == 0 ? 0.0 : totalStars / count;
+    }
+
     factory Book.fromJson(Map<String, dynamic> json) => Book(
         author: json["author"],
         bookCoverPage: json["book_cover_page"],
         bookId: json["book_id"],
         bookPdfUrl: json["book_pdf_url"],
+        category: json["category"] == null ? null : Category.fromJson(json["category"]),
         categoryId: json["category_id"],
         description: json["description"],
+        embedding: json["embedding"],
         isbn: json["isbn"],
         language: json["language"],
         publishYear: json["publish_year"],
@@ -90,8 +109,10 @@ class Book {
         "book_cover_page": bookCoverPage,
         "book_id": bookId,
         "book_pdf_url": bookPdfUrl,
+        "category": category?.toJson(),
         "category_id": categoryId,
         "description": description,
+        "embedding": embedding,
         "isbn": isbn,
         "language": language,
         "publish_year": publishYear,
@@ -101,6 +122,22 @@ class Book {
         "shelf_no": shelfNo,
         "status": status,
         "title": title,
+    };
+}
+
+class Category {
+    final String? categoryName;
+
+    Category({
+        this.categoryName,
+    });
+
+    factory Category.fromJson(Map<String, dynamic> json) => Category(
+        categoryName: json["category_name"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "category_name": categoryName,
     };
 }
 

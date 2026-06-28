@@ -11,6 +11,7 @@ import 'package:libgenius/BottomNavBar/Screens/Profile/user_history.dart';
 import 'package:libgenius/Controllers/auth_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
+import 'package:libgenius/Models/user_model.dart';
 import 'package:libgenius/Widgets/image_widget.dart';
 import 'package:libgenius/Widgets/my_appbar.dart';
 import 'package:libgenius/Widgets/my_button.dart';
@@ -38,8 +39,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: ClipOval(
                   child: ImageWidget(
                     url: userModel.value.studentData?.profilePictureUrl ?? '',
-                    height: 90,
-                    width: 90,
+                    height: 120,
+                    width: 120,
                   ),
                 ),
               ),
@@ -310,6 +311,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     myLoadingDialog();
 
                     await box.remove('user');
+                    userModel.value = UserModel();
                     await Future.delayed(Duration(seconds: 1));
 
                     Get.offAll(() => LoginPage());

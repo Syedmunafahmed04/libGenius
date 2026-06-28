@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "234610626707",
+    "project_id": "libgenius-94544",
+    "storage_bucket": "libgenius-94544.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234610626707:android:d2caa36fd16f808b9efd66",
+        "android_client_info": {
+          "package_name": "com.example.libgenius"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMyVXjSnM-ZlQKsJMFFZ_B9FSIlvfN1QM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

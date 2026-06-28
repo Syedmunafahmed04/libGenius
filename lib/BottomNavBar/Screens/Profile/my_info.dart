@@ -33,63 +33,16 @@ class _MyInfoState extends State<MyInfo> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(
-                children: [
-                  SizedBox(height: Get.height * 0.1),
-                  Center(
-                    child: GestureDetector(
-                      onTap: () async {
-                        await pickImage(ImageSource.gallery).then((value) {
-                          setState(() {
-                            uploadedImage = value;
-                          });
-                        });
-                      },
-                      child: uploadedImage != null
-                          ? ClipOval(
-                              child: Image.file(
-                                uploadedImage!,
-                                height: 90,
-                                width: 90,
-                                fit: BoxFit.cover,
-                              ),
-                            )
-                          : ClipOval(
-                              child: ImageWidget(
-                                url: data?.profilePictureUrl ?? '',
-                                height: 90,
-                                width: 90,
-                              ),
-                            ),
-                    ),
+              Center(
+                child: ClipOval(
+                  child: ImageWidget(
+                    url: data?.profilePictureUrl ?? '',
+                    height: 120,
+                    width: 120,
                   ),
-
-                  Positioned(
-                    bottom: Get.height * 0.003,
-
-                    right: Get.width * 0.36,
-                    child: GestureDetector(
-                      onTap: () async {
-                        await pickImage(ImageSource.gallery).then((value) {
-                          setState(() {
-                            uploadedImage = value;
-                          });
-                        });
-                      },
-                      child: CircleAvatar(
-                        radius: 12,
-                        backgroundColor: mainThemeColor,
-
-                        child: Image.asset(
-                          'assets/edit2.png',
-                          height: 14,
-                          width: 14,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
+
               height(0.01),
               Text(
                 'Name',
@@ -207,22 +160,22 @@ class _MyInfoState extends State<MyInfo> {
 
               height(0.01),
 
-              MyButton(
-                label: 'Update',
-                onTap: () async {
-                  if (uploadedImage == null) {
-                    myWarningDialog(
-                      title: 'Error',
-                      subtitle: 'Please Upload Image',
-                    );
-                    return;
-                  }
+              // MyButton(
+              //   label: 'Update',
+              //   onTap: () async {
+              //     if (uploadedImage == null) {
+              //       myWarningDialog(
+              //         title: 'Error',
+              //         subtitle: 'Please Upload Image',
+              //       );
+              //       return;
+              //     }
 
-                  await authController.updateProfileImage(
-                    image: uploadedImage!.path,
-                  );
-                },
-              ),
+              //     await authController.updateProfileImage(
+              //       image: uploadedImage!.path,
+              //     );
+              //   },
+              // ),
             ],
           ),
         );

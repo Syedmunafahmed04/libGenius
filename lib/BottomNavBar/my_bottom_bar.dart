@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:libgenius/BottomNavBar/Screens/AI/ai_screen.dart';
+import 'package:libgenius/BottomNavBar/Screens/AI/chat_screen.dart';
 import 'package:libgenius/BottomNavBar/Screens/Profile/profile_screen.dart';
 import 'package:libgenius/BottomNavBar/Screens/Search/search_screen.dart';
 import 'package:libgenius/BottomNavBar/Screens/home_screen.dart';
@@ -47,7 +47,7 @@ class _MyBottomBarState extends State<MyBottomBar> {
           tabs: const [
             GButton(icon: Icons.home_filled, text: 'Home'),
             GButton(icon: Icons.search, text: 'Search'),
-            GButton(icon: Icons.ac_unit_sharp, text: 'Ai'),
+            GButton(icon: Icons.question_answer_rounded, text: 'Chat'),
             GButton(icon: Icons.person, text: 'Profile'),
           ],
         ),

@@ -166,7 +166,7 @@ class _MyBooksState extends State<MyBooks> {
                           ),
 
                           child: Text(
-                            'Issued On: ${DateFormat('dd-MM-yyyy').format(item.issueDate!)}',
+                            'Issued On: ${DateFormat('dd MMM, yyyy').format(item.issueDate!)}',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
@@ -186,7 +186,7 @@ class _MyBooksState extends State<MyBooks> {
                           ),
 
                           child: Text(
-                            'Due Date: ${DateFormat('dd-MM-yyyy').format(item.dueDate!)}',
+                            'Due Date: ${DateFormat('dd MMM, yyyy').format(item.dueDate!)}',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
@@ -197,24 +197,24 @@ class _MyBooksState extends State<MyBooks> {
                       ],
                     ),
 
-                    height(0.02),
+                    // height(0.02),
 
-                    MyButton(
-                      buttonColor: Colors.red.shade900,
-                      fontSize: 14,
-                      label: 'Drop Book',
-                      onTap: () {
-                        myAlertDialog(
-                          title: 'Drop Book',
-                          content:
-                              'Are you sure to drop ${item.book?.title ?? 'N/A'} ?',
-                          onTap: () {
-                            Get.back();
-                           
-                          },
-                        );
-                      },
-                    ),
+                    // MyButton(
+                    //   buttonColor: Colors.red.shade900,
+                    //   fontSize: 14,
+                    //   label: 'Drop Book',
+                    //   onTap: () {
+                    //     myAlertDialog(
+                    //       title: 'Drop Book',
+                    //       content:
+                    //           'Are you sure to drop ${item.book?.title ?? 'N/A'} ?',
+                    //       onTap: () {
+                    //         Get.back();
+
+                    //       },
+                    //     );
+                    //   },
+                    // ),
                   ],
                 ),
               );

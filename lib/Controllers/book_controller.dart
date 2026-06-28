@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:libgenius/Global/global.dart';
+import 'package:libgenius/Models/book_reviews_model.dart';
 import 'package:libgenius/Models/books_model.dart';
+import 'package:libgenius/Models/chatbot_model.dart';
 import 'package:libgenius/Models/history_model.dart';
 import 'package:libgenius/Models/issue_model.dart';
 import 'package:libgenius/Services/api.dart';
@@ -13,6 +15,8 @@ class BookController extends GetxController {
   Rx<BooksModel> booksModel = BooksModel().obs;
   Rx<HistoryModel> historyModel = HistoryModel().obs;
   Rx<IssueModel> issueModel = IssueModel().obs;
+  Rx<BookReviewsModel> bookReviewsModel = BookReviewsModel().obs;
+  Rx<ChatbotModel> chatbotModel = ChatbotModel().obs;
 
   Future<void> getBooks() async {
     response.urlSetter = Api.booksAPI;
@@ -50,25 +54,27 @@ class BookController extends GetxController {
     response.typeSetter = 'post';
     myLoadingDialog();
 
-    await response.hitAPI().then((value) {
-      Get.back();
+    await response.hitAPI().then((value) async {
       if (value.split(" ").first != 'error') {
-        mySuccessDialog(
-          title: "Review Submitted Successfully",
-          subtitle: "Other students can now see your reviews",
-          ontap: () {
-            Get.close(2);
-          },
-        );
+        await getReviews(bookId: bookId);
+        Get.back();
+        // mySuccessDialog(
+        //   title: "Review Submitted Successfully",
+        //   subtitle: "Other students can now see your reviews",
+        //   ontap: () {
+        //     Get.back();
+        //   },
+        // );
       } else {
         final msg = jsonDecode(value.split("error ").last);
+        Get.back();
         myWarningDialog(
           title: 'Error',
           subtitle: msg['error'],
           btnTitle: 'Continue',
 
           ontap: () {
-            Get.close(2);
+            Get.back();
           },
         );
       }
@@ -138,6 +144,53 @@ class BookController extends GetxController {
         );
       } else {
         Get.back();
+        final msg = jsonDecode(value.split("error ").last);
+        myPrint(msg['message']);
+      }
+    });
+  }
+
+  Future<void> getReviews({required String bookId}) async {
+    response.urlSetter = '${Api.getReviewsAPI}/$bookId';
+    response.headerSetter = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${userModel.value.accessToken}',
+    };
+
+    response.typeSetter = 'get';
+
+    bookReviewsModel.value = BookReviewsModel();
+
+    await response.hitAPI().then((value) {
+      if (value.split(" ").first != 'error') {
+        bookReviewsModel.value = bookReviewsModelFromJson(value);
+      } else {
+        final msg = jsonDecode(value.split("error ").last);
+        myPrint(msg['message']);
+      }
+    });
+  }
+
+  Future<void> getChatbotMessage({
+    required String message,
+    required List<Map<String, String>> history,
+  }) async {
+    response.urlSetter = Api.chatbotAPI;
+    response.headerSetter = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${userModel.value.accessToken}',
+    };
+
+    response.bodySetter2 = {
+      'question': message,
+      'conversation_history': history,
+    };
+    response.typeSetter = 'post';
+
+    await response.hitAPI().then((value) async {
+      if (value.split(" ").first != 'error') {
+        chatbotModel.value = chatbotModelFromJson(value);
+      } else {
         final msg = jsonDecode(value.split("error ").last);
         myPrint(msg['message']);
       }

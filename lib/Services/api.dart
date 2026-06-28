@@ -17,7 +17,13 @@ class Api {
   //Books
   static const String booksAPI = '$baseAPI/get-books';
   static const String bookReviewAPI = '$baseAPI/add-reviews';
+  static const String getReviewsAPI = '$baseAPI/get-reviews';
   static const String userHistoryAPI = '$baseAPI/my-issued-books/history';
   static const String issueBookAPI = '$baseAPI/my-issued-books';
   static const String dropBookAPI = '$baseAPI/drop-book';
+
+
+  // Chatbot
+static const String chatbotAPI='$baseAPI/chatbot';
+
 }
