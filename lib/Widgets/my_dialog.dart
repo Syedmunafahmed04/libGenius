@@ -127,7 +127,7 @@ class WarningDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 15),
-            // Image.asset(image ?? 'assets/warning.png', height: 80, width: 80),
+            Image.asset(image ?? 'assets/warning.png', height: 60, width: 60),
             const SizedBox(height: 20),
             Center(
               child: Text(
@@ -135,7 +135,7 @@ class WarningDialog extends StatelessWidget {
                 style: TextStyle(
                   color: blackColor,
                   fontWeight: FontWeight.w600,
-                  fontSize: 24,
+                  fontSize: 20,
                 ),
                 textAlign: TextAlign.center,
               ),

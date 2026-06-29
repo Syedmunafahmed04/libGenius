@@ -55,6 +55,14 @@ class _OtpScreenState extends State<OtpScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 height(0.3),
+
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Icon(Icons.arrow_back, color: whiteColor, size: 22),
+                ),
+                height(0.02),
                 Text('Verify your Email', style: authHeadingStyle),
                 height(0.003),
                 Text(

@@ -311,10 +311,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     myLoadingDialog();
 
                     await box.remove('user');
-                    userModel.value = UserModel();
+
                     await Future.delayed(Duration(seconds: 1));
 
                     Get.offAll(() => LoginPage());
+                    userModel.value = UserModel();
                   },
                 );
 

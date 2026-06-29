@@ -2,13 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:libgenius/Controllers/auth_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Widgets/image_widget.dart';
 import 'package:libgenius/Widgets/my_appbar.dart';
-import 'package:libgenius/Widgets/my_button.dart';
 
 class MyInfo extends StatefulWidget {
   const MyInfo({super.key});

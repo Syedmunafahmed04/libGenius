@@ -99,9 +99,13 @@ class _BookDetailState extends State<BookDetail> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        widget.bookData.title ?? 'N/A',
-                        style: categoriesHeadingStyle,
+                      Flexible(
+                        child: Text(
+                          widget.bookData.title ?? 'N/A',
+                          style: categoriesHeadingStyle,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
                       ),
                     ],
                   ),

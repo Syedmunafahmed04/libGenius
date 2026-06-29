@@ -18,16 +18,26 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final DatabaseReference _dbRef = FirebaseDatabase.instance
+  // Use a sanitized access token as the node key so each login session
+  // creates a fresh, isolated chat history.
+  static String _sessionKey() {
+    final token = userModel.value.accessToken ?? 'guest';
+    // Firebase keys cannot contain . $ # [ ] / so replace them with _
+    return token.replaceAll(RegExp(r'[.\$#\[\]/]'), '_');
+  }
+
+  late final DatabaseReference _dbRef = FirebaseDatabase.instance
       .ref()
       .child('chats')
-      .child(userModel.value.studentData!.userId!);
+      .child(userModel.value.studentData!.userId!)
+      .child(_sessionKey());
   final BookController bookController = Get.put(BookController());
   final ScrollController _scrollController = ScrollController();
 
   List<Message> messages = [];
   final TextEditingController _textController = TextEditingController();
   bool isLoading = false;
+  bool isMessagesLoading = true;
   double _previousKeyboardHeight = 0;
 
   File? media;
@@ -49,11 +59,13 @@ class _ChatScreenState extends State<ChatScreen> {
         loadedMessages.sort((a, b) => a.timestamp.compareTo(b.timestamp));
         setState(() {
           messages = loadedMessages;
+          isMessagesLoading = false;
         });
         WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
       } else {
         setState(() {
           messages = [];
+          isMessagesLoading = false;
         });
       }
     });
@@ -61,11 +73,15 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _scrollToBottom() {
     if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
+      Future.delayed(const Duration(milliseconds: 150), () {
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        }
+      });
     }
   }
 
@@ -76,10 +92,10 @@ class _ChatScreenState extends State<ChatScreen> {
       timestamp: DateTime.now(),
     );
 
-    // Prepare history: up to last 5 messages before the new userMessage
-    final int skipCount = messages.length > 5 ? messages.length - 5 : 0;
+    // Send the full conversation history (all messages so far) for context.
+    // This is built BEFORE saving the new user message so it only contains
+    // the previous turns, matching the expected API format.
     List<Map<String, String>> history = messages
-        .skip(skipCount)
         .map((msg) => {'role': msg.role, 'content': msg.content})
         .toList();
 
@@ -171,40 +187,58 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: messages.length + (isLoading ? 1 : 0),
-              itemBuilder: (context, index) {
-                if (index == messages.length) {
-                  return _buildTypingIndicator();
-                }
+            child: isMessagesLoading
+                ? Center(
+                    child: CircularProgressIndicator(color: mainThemeColor),
+                  )
+                : messages.isEmpty
+                ? Center(
+                    child: Text(
+                      "Start a Conversation",
+                      style: TextStyle(
+                        color: whiteColor.withValues(alpha: 0.6),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  )
+                : ListView.builder(
+                    controller: _scrollController,
+                    itemCount: messages.length + (isLoading ? 1 : 0),
+                    itemBuilder: (context, index) {
+                      if (index == messages.length) {
+                        return _buildTypingIndicator();
+                      }
 
-                final message = messages[index];
-                bool showDateHeader = false;
-                if (index == 0) {
-                  showDateHeader = true;
-                } else {
-                  final prevMessage = messages[index - 1];
-                  if (message.timestamp.year != prevMessage.timestamp.year ||
-                      message.timestamp.month != prevMessage.timestamp.month ||
-                      message.timestamp.day != prevMessage.timestamp.day) {
-                    showDateHeader = true;
-                  }
-                }
+                      final message = messages[index];
+                      bool showDateHeader = false;
+                      if (index == 0) {
+                        showDateHeader = true;
+                      } else {
+                        final prevMessage = messages[index - 1];
+                        if (message.timestamp.year !=
+                                prevMessage.timestamp.year ||
+                            message.timestamp.month !=
+                                prevMessage.timestamp.month ||
+                            message.timestamp.day !=
+                                prevMessage.timestamp.day) {
+                          showDateHeader = true;
+                        }
+                      }
 
-                if (showDateHeader) {
-                  return Column(
-                    children: [
-                      _buildDateHeader(message.timestamp),
-                      _buildMessage(message),
-                    ],
-                  );
-                }
+                      if (showDateHeader) {
+                        return Column(
+                          children: [
+                            _buildDateHeader(message.timestamp),
+                            _buildMessage(message),
+                          ],
+                        );
+                      }
 
-                return _buildMessage(message);
-              },
-              physics: const AlwaysScrollableScrollPhysics(),
-            ),
+                      return _buildMessage(message);
+                    },
+                    physics: const AlwaysScrollableScrollPhysics(),
+                  ),
           ),
 
           Padding(

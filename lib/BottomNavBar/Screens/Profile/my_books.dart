@@ -6,7 +6,6 @@ import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Widgets/image_widget.dart';
 import 'package:libgenius/Widgets/my_appbar.dart';
-import 'package:libgenius/Widgets/my_button.dart';
 
 class MyBooks extends StatefulWidget {
   const MyBooks({super.key});
@@ -84,7 +83,7 @@ class _MyBooksState extends State<MyBooks> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              width: Get.width * 0.3,
+                              width: Get.width * 0.5,
                               padding: EdgeInsets.symmetric(
                                 vertical: 3,
                                 horizontal: 8,
@@ -96,7 +95,7 @@ class _MyBooksState extends State<MyBooks> {
                               child: Center(
                                 child: Text(
                                   overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
+                                  maxLines: 2,
                                   item.book?.title ?? 'N/A',
                                   style: TextStyle(
                                     color: blackColor,
@@ -112,7 +111,7 @@ class _MyBooksState extends State<MyBooks> {
                               child: Text(
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
-                                item.book?.author ?? 'N/A',
+                                'By: ${item.book?.author ?? 'N/A'}',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 13,
@@ -166,7 +165,7 @@ class _MyBooksState extends State<MyBooks> {
                           ),
 
                           child: Text(
-                            'Issued On: ${DateFormat('dd MMM, yyyy').format(item.issueDate!)}',
+                            'Issued On: ${DateFormat('dd MMM, yyyy').format(item.issueDate!.toLocal())}',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
@@ -186,7 +185,7 @@ class _MyBooksState extends State<MyBooks> {
                           ),
 
                           child: Text(
-                            'Due Date: ${DateFormat('dd MMM, yyyy').format(item.dueDate!)}',
+                            'Due Date: ${DateFormat('dd MMM, yyyy').format(item.dueDate!.toLocal())}',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,

@@ -121,6 +121,7 @@ class _UserHistoryState extends State<UserHistory> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
+                                  width: Get.width * 0.4,
                                   padding: EdgeInsets.symmetric(
                                     vertical: 3,
                                     horizontal: 8,
@@ -132,7 +133,7 @@ class _UserHistoryState extends State<UserHistory> {
                                   child: Center(
                                     child: Text(
                                       overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
+                                      maxLines: 2,
                                       item.book?.title ?? 'N/A',
                                       style: TextStyle(
                                         color: blackColor,
@@ -148,7 +149,7 @@ class _UserHistoryState extends State<UserHistory> {
                                   child: Text(
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
-                                    item.book?.author ?? 'N/A',
+                                    'By: ${item.book?.author ?? 'N/A'}',
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 13,

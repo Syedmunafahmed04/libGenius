@@ -51,17 +51,17 @@ class _SignUpState extends State<SignUp> {
                     return null;
                   },
                 ),
-                MyTextField(
-                  hintText: 'Enter Email',
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  validation: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter email';
-                    }
-                    return null;
-                  },
-                ),
+                // MyTextField(
+                //   hintText: 'Enter Email',
+                //   controller: emailController,
+                //   keyboardType: TextInputType.emailAddress,
+                //   validation: (value) {
+                //     if (value!.isEmpty) {
+                //       return 'Please enter email';
+                //     }
+                //     return null;
+                //   },
+                // ),
                 MyTextField(
                   hintText: 'Enter Password',
                   controller: passwordController,
@@ -123,14 +123,6 @@ class _SignUpState extends State<SignUp> {
                 height(0.02),
                 MyButton(
                   onTap: () async {
-                    if (formKey.currentState!.validate()) {
-                    await  authController.register(
-                        cms: cmsController.text.trim(),
-                        email: emailController.text.trim(),
-                        password: confirmPasswordController.text.trim(),
-                      );
-                      return;
-                    }
                     if (checkValue == false) {
                       myWarningDialog(
                         subtitle:
@@ -138,6 +130,13 @@ class _SignUpState extends State<SignUp> {
                         title: "Warning",
                       );
                       return;
+                    }
+                    if (formKey.currentState!.validate()) {
+                      await authController.register(
+                        cms: cmsController.text.trim(),
+                        email: emailController.text.trim(),
+                        password: confirmPasswordController.text.trim(),
+                      );
                     }
                   },
                   label: 'Sign Up',

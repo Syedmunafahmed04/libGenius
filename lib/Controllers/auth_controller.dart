@@ -16,6 +16,7 @@ class AuthController extends GetxController {
     required String cms,
     required String password,
     bool isRemember = false,
+    bool fromSplash = false,
   }) async {
     response.bodySetter2 = {'cms_id': cms, 'password': password};
     response.urlSetter = Api.loginAPI;
@@ -23,29 +24,44 @@ class AuthController extends GetxController {
 
     response.headerSetter = {'Content-Type': 'application/json'};
 
-    myLoadingDialog();
+    fromSplash ? null : myLoadingDialog();
     await response.hitAPI().then((value) {
       Get.back();
       if (value.split(" ").first != 'error') {
         userModel.value = userModelFromJson(value);
 
-        if (userModel.value.studentData?.isVerified == false) {
+        if (userModel.value.studentData?.isBlocked == true) {
+          box.remove('user');
+          box.remove('password');
           myWarningDialog(
-            title: 'Account Not Verified',
-            subtitle: "We've sent an OTP, Please check email to verify.",
+            title: 'Account Blocked',
+            subtitle: "Your account has been blocked by the librarian.",
             btnTitle: 'Continue',
 
             ontap: () {
-              Get.off(() => OtpScreen());
+              Get.offAll(() => LoginPage());
             },
           );
         } else {
           isRemember ? box.write('user', userModel.value.toJson()) : null;
+          isRemember ? box.write('password', password) : null;
           Get.offAll(() => MyBottomBar());
         }
       } else {
         final msg = jsonDecode(value.split("error ").last);
-        myWarningDialog(title: 'Error', subtitle: msg['error']);
+        myWarningDialog(
+          title: 'Error',
+          subtitle: msg['error'],
+
+          ontap: () async {
+            if (msg['error'] == 'Please verify your email first') {
+              Get.back();
+              await resendOtp(cmsId: cms);
+            } else {
+              Get.back();
+            }
+          },
+        );
       }
     });
   }
@@ -58,7 +74,7 @@ class AuthController extends GetxController {
     response.bodySetter2 = {
       'cms_id': cms,
       'password': password,
-      'email': email,
+      // 'email': email,
     };
     response.urlSetter = Api.signupAPI;
     response.typeSetter = 'post';
@@ -96,10 +112,10 @@ class AuthController extends GetxController {
 
         mySuccessDialog(
           title: 'Account Verified',
-          subtitle: 'Welcome To LibGenius',
+          subtitle: 'Login again to continue with LibGenius',
           btnTitle: 'Continue',
           ontap: () {
-            Get.offAll(() => MyBottomBar());
+            Get.offAll(() => LoginPage());
           },
         );
       } else {
@@ -109,7 +125,6 @@ class AuthController extends GetxController {
     });
   }
 
-  //TODO Make Resend Button
   Future<void> resendOtp({required String cmsId}) async {
     response.bodySetter2 = {'cms_id': cmsId};
     response.urlSetter = Api.resendOtpAPI;
@@ -124,7 +139,7 @@ class AuthController extends GetxController {
           subtitle: "We've sent an OTP, Please check email to verify.",
           btnTitle: 'Continue',
           ontap: () {
-            Get.back();
+            Get.off(() => OtpScreen());
           },
         );
       } else {
@@ -253,7 +268,9 @@ class AuthController extends GetxController {
 
     myLoadingDialog();
 
-    await response.hitMultipartAPI(image, key: 'profile_picture_url').then((value) {
+    await response.hitMultipartAPI(image, key: 'profile_picture_url').then((
+      value,
+    ) {
       Get.back();
       if (value.split(" ").first != 'error') {
         userModel.value = userModelFromJson(value);

@@ -105,7 +105,7 @@ class Book {
 }
 
 class Fine {
-    final double? fineAmount;
+    final num? fineAmount;
     final dynamic fineId;
     final bool? isPaid;
 
