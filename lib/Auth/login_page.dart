@@ -5,6 +5,7 @@ import 'package:libgenius/Auth/sign_up.dart';
 import 'package:libgenius/Controllers/auth_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
+import 'package:libgenius/Services/push_notification_services.dart';
 import 'package:libgenius/Widgets/my_body.dart';
 import 'package:libgenius/Widgets/my_button.dart';
 import 'package:libgenius/Widgets/my_textfield.dart';
@@ -27,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    PushNotificationSystem().requestNotificationPermission();
   }
 
   @override
@@ -112,8 +114,6 @@ class _LoginPageState extends State<LoginPage> {
                         isRemember: remember,
                       );
                     }
-
-                   
                   },
                   label: 'Login',
                 ),

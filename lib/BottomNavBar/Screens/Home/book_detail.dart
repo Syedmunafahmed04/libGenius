@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:libgenius/BottomNavBar/Screens/Home/pdf_screen.dart';
 import 'package:libgenius/Controllers/book_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
@@ -206,25 +207,31 @@ class _BookDetailState extends State<BookDetail> {
                         onTap: () async {
                           if (widget.bookData.bookPdfUrl != null &&
                               widget.bookData.bookPdfUrl!.isNotEmpty) {
-                            final url = Uri.parse(widget.bookData.bookPdfUrl!);
-                            if (await canLaunchUrl(url)) {
-                              await launchUrl(
-                                url,
-                                mode: LaunchMode.externalApplication,
-                              );
-                            } else {
-                              myWarningDialog(
-                                title: 'Error',
-                                subtitle: 'Could not open the PDF',
-                                btnTitle: 'Continue',
-                                ontap: () {
-                                  Get.back();
-                                },
-                              );
-                            }
+                            Get.to(
+                              () => PdfScreen(
+                                title: widget.bookData.title ?? 'N/A',
+                                pdfUrl: widget.bookData.bookPdfUrl!,
+                              ),
+                            );
+                            // final url = Uri.parse(widget.bookData.bookPdfUrl!);
+                            // if (await canLaunchUrl(url)) {
+                            //   await launchUrl(
+                            //     url,
+                            //     mode: LaunchMode.externalApplication,
+                            //   );
+                            // } else {
+                            //   myWarningDialog(
+                            //     title: 'Error',
+                            //     subtitle: 'Could not open the PDF',
+                            //     btnTitle: 'Continue',
+                            //     ontap: () {
+                            //       Get.back();
+                            //     },
+                            //   );
+                            // }
                           } else {
                             myWarningDialog(
-                              title: 'Alert',
+                              title: 'Error',
                               subtitle: 'PDF link not available for this book',
                               btnTitle: 'Continue',
                               ontap: () {

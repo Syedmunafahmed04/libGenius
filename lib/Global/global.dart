@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:googleapis_auth/auth_io.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Models/user_model.dart';
@@ -45,6 +46,9 @@ myLoadingDialog({String? title, bool showLoader = false}) {
     },
   );
 }
+
+AccessCredentials? credentials;
+String fcmAccessToken = '';
 
 mySnackBar({required String title, required String message, int duration = 1}) {
   Get.snackbar(

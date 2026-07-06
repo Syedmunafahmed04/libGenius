@@ -4,6 +4,7 @@ import 'package:libgenius/BottomNavBar/Screens/Home/book_detail.dart';
 import 'package:libgenius/Controllers/book_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
+import 'package:libgenius/Services/push_notification_services.dart';
 import 'package:libgenius/Widgets/my_appbar.dart';
 import 'package:libgenius/Widgets/my_home_card.dart';
 import 'package:libgenius/Widgets/my_see_all.dart';
@@ -26,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    PushNotificationSystem().requestNotificationPermission();
     myInit();
   }
 
@@ -80,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 final data = List<Book>.from(originalData);
                 data.sort((a, b) => b.bookId!.compareTo(a.bookId!));
                 return SizedBox(
-                  height: Get.height * 0.24,
+                  height: Get.height * 0.26,
                   child: ListView.separated(
                     separatorBuilder: (context, index) {
                       return width(.02);
@@ -126,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   (a, b) => b.averageRating.compareTo(a.averageRating),
                 );
                 return SizedBox(
-                  height: Get.height * 0.24,
+                  height: Get.height * 0.26,
                   child: ListView.separated(
                     separatorBuilder: (context, index) {
                       return width(.02);

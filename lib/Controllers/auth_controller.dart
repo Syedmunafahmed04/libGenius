@@ -8,6 +8,7 @@ import 'package:libgenius/Global/global.dart';
 import 'package:libgenius/Models/user_model.dart';
 import 'package:libgenius/Services/api.dart';
 import 'package:libgenius/Services/api_services.dart';
+import 'package:libgenius/Services/push_notification_services.dart';
 
 class AuthController extends GetxController {
   final response = ApiResponse();
@@ -25,7 +26,7 @@ class AuthController extends GetxController {
     response.headerSetter = {'Content-Type': 'application/json'};
 
     fromSplash ? null : myLoadingDialog();
-    await response.hitAPI().then((value) {
+    await response.hitAPI().then((value) async {
       Get.back();
       if (value.split(" ").first != 'error') {
         userModel.value = userModelFromJson(value);
@@ -45,6 +46,7 @@ class AuthController extends GetxController {
         } else {
           isRemember ? box.write('user', userModel.value.toJson()) : null;
           isRemember ? box.write('password', password) : null;
+          await PushNotificationSystem().generateAndGetToken();
           Get.offAll(() => MyBottomBar());
         }
       } else {
@@ -105,11 +107,11 @@ class AuthController extends GetxController {
     response.typeSetter = 'post';
     response.headerSetter = {'Content-Type': 'application/json'};
     myLoadingDialog();
-    await response.hitAPI().then((value) {
-      Get.back();
+    await response.hitAPI().then((value) async {
       if (value.split(" ").first != 'error') {
         userModel.value = userModelFromJson(value);
-
+        await PushNotificationSystem().generateAndGetToken();
+        Get.back();
         mySuccessDialog(
           title: 'Account Verified',
           subtitle: 'Login again to continue with LibGenius',
@@ -120,6 +122,7 @@ class AuthController extends GetxController {
         );
       } else {
         final msg = jsonDecode(value.split("error ").last);
+        Get.back();
         myWarningDialog(title: 'Error', subtitle: msg['error']);
       }
     });

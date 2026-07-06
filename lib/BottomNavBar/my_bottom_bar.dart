@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:libgenius/BottomNavBar/Screens/AI/chat_screen.dart';
 import 'package:libgenius/BottomNavBar/Screens/Profile/profile_screen.dart';
 import 'package:libgenius/BottomNavBar/Screens/Search/search_screen.dart';
 import 'package:libgenius/BottomNavBar/Screens/home_screen.dart';
 import 'package:libgenius/Global/colors.dart';
+import 'package:libgenius/Services/push_notification_services.dart';
 
 class MyBottomBar extends StatefulWidget {
   const MyBottomBar({super.key});
@@ -22,6 +24,19 @@ class _MyBottomBarState extends State<MyBottomBar> {
     const ChatScreen(),
     const ProfileScreen(),
   ];
+
+  Future myInitMethid() async {
+    await PushNotificationSystem().requestIOSPermissions();
+    await PushNotificationSystem().generateAndGetToken();
+    await PushNotificationSystem().getAccessToken();
+    await PushNotificationSystem().initialingCloudMessaging(Get.context!);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    myInitMethid();
+  }
 
   @override
   Widget build(BuildContext context) {
