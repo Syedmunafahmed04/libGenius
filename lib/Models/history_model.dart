@@ -35,19 +35,27 @@ class HistoryModel {
 class History {
     final Book? book;
     final int? bookId;
+    final String? cmsId;
     final DateTime? dueDate;
     final Fine? fine;
+    final num? fineAmount;
+    final int? fineId;
+    final num? fineTableAmount;
     final DateTime? issueDate;
     final int? issueId;
-    final DateTime? returnDate;
+    final dynamic returnDate;
     final String? status;
     final String? userId;
 
     History({
         this.book,
         this.bookId,
+        this.cmsId,
         this.dueDate,
         this.fine,
+        this.fineAmount,
+        this.fineId,
+        this.fineTableAmount,
         this.issueDate,
         this.issueId,
         this.returnDate,
@@ -58,11 +66,15 @@ class History {
     factory History.fromJson(Map<String, dynamic> json) => History(
         book: json["book"] == null ? null : Book.fromJson(json["book"]),
         bookId: json["book_id"],
+        cmsId: json["cms_id"],
         dueDate: json["due_date"] == null ? null : DateTime.parse(json["due_date"]),
         fine: json["fine"] == null ? null : Fine.fromJson(json["fine"]),
+        fineAmount: json["fine_amount"],
+        fineId: json["fine_id"],
+        fineTableAmount: json["fine_table_amount"],
         issueDate: json["issue_date"] == null ? null : DateTime.parse(json["issue_date"]),
         issueId: json["issue_id"],
-        returnDate: json["return_date"] == null ? null : DateTime.parse(json["return_date"]),
+        returnDate: json["return_date"],
         status: json["status"],
         userId: json["user_id"],
     );
@@ -70,11 +82,15 @@ class History {
     Map<String, dynamic> toJson() => {
         "book": book?.toJson(),
         "book_id": bookId,
-        "due_date": "${dueDate!.year.toString().padLeft(4, '0')}-${dueDate!.month.toString().padLeft(2, '0')}-${dueDate!.day.toString().padLeft(2, '0')}",
+        "cms_id": cmsId,
+        "due_date": dueDate == null ? null : "${dueDate!.year.toString().padLeft(4, '0')}-${dueDate!.month.toString().padLeft(2, '0')}-${dueDate!.day.toString().padLeft(2, '0')}",
         "fine": fine?.toJson(),
-        "issue_date": "${issueDate!.year.toString().padLeft(4, '0')}-${issueDate!.month.toString().padLeft(2, '0')}-${issueDate!.day.toString().padLeft(2, '0')}",
+        "fine_amount": fineAmount,
+        "fine_id": fineId,
+        "fine_table_amount": fineTableAmount,
+        "issue_date": issueDate == null ? null : "${issueDate!.year.toString().padLeft(4, '0')}-${issueDate!.month.toString().padLeft(2, '0')}-${issueDate!.day.toString().padLeft(2, '0')}",
         "issue_id": issueId,
-        "return_date": "${returnDate!.year.toString().padLeft(4, '0')}-${returnDate!.month.toString().padLeft(2, '0')}-${returnDate!.day.toString().padLeft(2, '0')}",
+        "return_date": returnDate,
         "status": status,
         "user_id": userId,
     };
@@ -109,7 +125,7 @@ class Book {
 }
 
 class Fine {
-    final num? fineAmount;
+    final int? fineAmount;
     final dynamic fineId;
     final bool? isPaid;
 

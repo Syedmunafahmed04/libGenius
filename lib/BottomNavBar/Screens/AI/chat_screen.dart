@@ -18,19 +18,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  // Use a sanitized access token as the node key so each login session
-  // creates a fresh, isolated chat history.
-  static String _sessionKey() {
-    final token = userModel.value.accessToken ?? 'guest';
-    // Firebase keys cannot contain . $ # [ ] / so replace them with _
-    return token.replaceAll(RegExp(r'[.\$#\[\]/]'), '_');
-  }
-
   late final DatabaseReference _dbRef = FirebaseDatabase.instance
       .ref()
       .child('chats')
-      .child(userModel.value.studentData!.userId!)
-      .child(_sessionKey());
+      .child(userModel.value.studentData!.userId!);
   final BookController bookController = Get.put(BookController());
   final ScrollController _scrollController = ScrollController();
 

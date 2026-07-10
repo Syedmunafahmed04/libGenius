@@ -247,6 +247,8 @@ class AuthController extends GetxController {
     await response.hitAPI().then((value) {
       Get.back();
       if (value.split(" ").first != 'error') {
+        box.write('password', newPassword);
+
         mySuccessDialog(
           title: 'Password Changed Successfully!',
           subtitle: "Now you can login with your new password.",

@@ -22,6 +22,7 @@ class _UserHistoryState extends State<UserHistory> {
   final bookController = Get.put(BookController());
 
   Future<void> myInit() async {
+    await bookController.getIssuedBooks();
     await bookController.getUserHistory();
   }
 
@@ -48,13 +49,28 @@ class _UserHistoryState extends State<UserHistory> {
       ),
 
       body: Obx(() {
-        final data = bookController.historyModel.value.history;
+        final allHistory = bookController.historyModel.value.history;
+        final issuedBooks = bookController.issueModel.value.issuedBooks;
 
-        if (data == null) {
+        if (allHistory == null) {
           return Center(
             child: CircularProgressIndicator(color: mainThemeColor),
           );
         }
+
+        // Collect all issueIds from currently issued books
+        final issuedIssueIds = (issuedBooks ?? [])
+            .map((e) => e.issueId)
+            .whereType<int>()
+            .toSet();
+
+        // Filter out history items that are currently issued
+        final data = allHistory
+            .where(
+              (h) => h.issueId == null || !issuedIssueIds.contains(h.issueId),
+            )
+            .toList();
+
         if (data.isEmpty) {
           return Center(
             child: Text(
@@ -162,11 +178,11 @@ class _UserHistoryState extends State<UserHistory> {
                           ],
                         ),
 
-                        item.fine?.fineAmount != 0
+                        ((item.fineTableAmount ?? 0) > 0)
                             ? height(0.02)
                             : SizedBox.shrink(),
 
-                        item.fine?.fineAmount != 0
+                        ((item.fineTableAmount ?? 0) > 0)
                             ? Container(
                                 padding: EdgeInsets.symmetric(
                                   vertical: 1,
@@ -178,7 +194,7 @@ class _UserHistoryState extends State<UserHistory> {
                                 ),
 
                                 child: Text(
-                                  'Fined: ${item.fine?.fineAmount} Rs',
+                                  'Fined: ${item.fineTableAmount ?? 0} Rs',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 13,

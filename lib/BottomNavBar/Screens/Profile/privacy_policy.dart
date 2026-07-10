@@ -32,7 +32,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
             height(0.02),
 
             Text(
-              '''Worem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.''',
+              '''The Hamdard University Library App collects basic information such as your name, student ID, email, and app usage to provide library services like searching books, making requests, and improving your experience. Your data is only used for academic and app-related purposes and is shared only with authorized university staff when necessary. We do not sell your information, and we take reasonable steps to keep it secure. Your data is kept only as long as needed according to university policies, and you may request to access, update, or delete your information by contacting us. By using this app, you agree to this privacy policy.''',
               textAlign: TextAlign.justify,
               style: TextStyle(
                 color: whiteColor,

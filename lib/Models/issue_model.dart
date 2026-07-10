@@ -35,8 +35,12 @@ class IssueModel {
 class IssuedBook {
     final Book? book;
     final int? bookId;
+    final String? cmsId;
     final DateTime? dueDate;
-    final Fine? fine;
+    final num? fineAmount;
+    final int? fineId;
+    final num? fineTableAmount;
+    final bool? isPaid;
     final DateTime? issueDate;
     final int? issueId;
     final String? status;
@@ -45,8 +49,12 @@ class IssuedBook {
     IssuedBook({
         this.book,
         this.bookId,
+        this.cmsId,
         this.dueDate,
-        this.fine,
+        this.fineAmount,
+        this.fineId,
+        this.fineTableAmount,
+        this.isPaid,
         this.issueDate,
         this.issueId,
         this.status,
@@ -56,8 +64,12 @@ class IssuedBook {
     factory IssuedBook.fromJson(Map<String, dynamic> json) => IssuedBook(
         book: json["book"] == null ? null : Book.fromJson(json["book"]),
         bookId: json["book_id"],
+        cmsId: json["cms_id"],
         dueDate: json["due_date"] == null ? null : DateTime.parse(json["due_date"]),
-        fine: json["fine"] == null ? null : Fine.fromJson(json["fine"]),
+        fineAmount: json["fine_amount"],
+        fineId: json["fine_id"],
+        fineTableAmount: json["fine_table_amount"],
+        isPaid: json["is_paid"],
         issueDate: json["issue_date"] == null ? null : DateTime.parse(json["issue_date"]),
         issueId: json["issue_id"],
         status: json["status"],
@@ -67,9 +79,13 @@ class IssuedBook {
     Map<String, dynamic> toJson() => {
         "book": book?.toJson(),
         "book_id": bookId,
-        "due_date": "${dueDate!.year.toString().padLeft(4, '0')}-${dueDate!.month.toString().padLeft(2, '0')}-${dueDate!.day.toString().padLeft(2, '0')}",
-        "fine": fine?.toJson(),
-        "issue_date": "${issueDate!.year.toString().padLeft(4, '0')}-${issueDate!.month.toString().padLeft(2, '0')}-${issueDate!.day.toString().padLeft(2, '0')}",
+        "cms_id": cmsId,
+        "due_date": dueDate == null ? null : "${dueDate!.year.toString().padLeft(4, '0')}-${dueDate!.month.toString().padLeft(2, '0')}-${dueDate!.day.toString().padLeft(2, '0')}",
+        "fine_amount": fineAmount,
+        "fine_id": fineId,
+        "fine_table_amount": fineTableAmount,
+        "is_paid": isPaid,
+        "issue_date": issueDate == null ? null : "${issueDate!.year.toString().padLeft(4, '0')}-${issueDate!.month.toString().padLeft(2, '0')}-${issueDate!.day.toString().padLeft(2, '0')}",
         "issue_id": issueId,
         "status": status,
         "user_id": userId,
@@ -79,12 +95,14 @@ class IssuedBook {
 class Book {
     final String? author;
     final String? bookCoverPage;
+    final int? finePerDay;
     final String? shelfNo;
     final String? title;
 
     Book({
         this.author,
         this.bookCoverPage,
+        this.finePerDay,
         this.shelfNo,
         this.title,
     });
@@ -92,6 +110,7 @@ class Book {
     factory Book.fromJson(Map<String, dynamic> json) => Book(
         author: json["author"],
         bookCoverPage: json["book_cover_page"],
+        finePerDay: json["fine_per_day"],
         shelfNo: json["shelf_no"],
         title: json["title"],
     );
@@ -99,31 +118,8 @@ class Book {
     Map<String, dynamic> toJson() => {
         "author": author,
         "book_cover_page": bookCoverPage,
+        "fine_per_day": finePerDay,
         "shelf_no": shelfNo,
         "title": title,
-    };
-}
-
-class Fine {
-    final num? fineAmount;
-    final dynamic fineId;
-    final bool? isPaid;
-
-    Fine({
-        this.fineAmount,
-        this.fineId,
-        this.isPaid,
-    });
-
-    factory Fine.fromJson(Map<String, dynamic> json) => Fine(
-        fineAmount: json["fine_amount"],
-        fineId: json["fine_id"],
-        isPaid: json["is_paid"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "fine_amount": fineAmount,
-        "fine_id": fineId,
-        "is_paid": isPaid,
     };
 }

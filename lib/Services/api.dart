@@ -1,6 +1,5 @@
 class Api {
-  static const String mainIP =
-      'https://libgenius-api-production.up.railway.app';
+  static const String mainIP = 'https://tablet-landowner-rudder.ngrok-free.dev';
   static const String baseAPI = '$mainIP/api';
 
   //Auth
@@ -22,8 +21,6 @@ class Api {
   static const String issueBookAPI = '$baseAPI/my-issued-books';
   static const String dropBookAPI = '$baseAPI/drop-book';
 
-
   // Chatbot
-static const String chatbotAPI='$baseAPI/chatbot';
-
+  static const String chatbotAPI = '$baseAPI/chatbot';
 }

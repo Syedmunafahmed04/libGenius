@@ -190,6 +190,7 @@ class BookController extends GetxController {
     await response.hitAPI().then((value) async {
       if (value.split(" ").first != 'error') {
         chatbotModel.value = chatbotModelFromJson(value);
+        myPrint('Chatbot Response: ${chatbotModel.value.answer}');
       } else {
         final msg = jsonDecode(value.split("error ").last);
         myPrint(msg['message']);

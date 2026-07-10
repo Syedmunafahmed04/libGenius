@@ -9,7 +9,6 @@ import 'package:libgenius/Models/books_model.dart';
 import 'package:libgenius/Widgets/image_widget.dart';
 import 'package:libgenius/Widgets/my_button.dart';
 import 'package:libgenius/Widgets/my_textfield.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class BookDetail extends StatefulWidget {
   final Book bookData;

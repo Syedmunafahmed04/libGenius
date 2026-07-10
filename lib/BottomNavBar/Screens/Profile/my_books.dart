@@ -123,11 +123,11 @@ class _MyBooksState extends State<MyBooks> {
                         ),
                       ],
                     ),
-                    item.fine!.fineAmount! > 0
+                    ((item.fineTableAmount ?? 0) > 0)
                         ? height(0.02)
                         : SizedBox.shrink(),
 
-                    item.fine!.fineAmount! > 0
+                    ((item.fineTableAmount ?? 0) > 0)
                         ? Container(
                             padding: EdgeInsets.symmetric(
                               vertical: 1,
@@ -139,7 +139,7 @@ class _MyBooksState extends State<MyBooks> {
                             ),
 
                             child: Text(
-                              'Fined: ${item.fine!.fineAmount} Rs',
+                              'Fined: ${item.fineTableAmount ?? 0} Rs',
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 13,

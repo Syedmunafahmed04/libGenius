@@ -32,7 +32,11 @@ class _AboutUsState extends State<AboutUs> {
             height(0.02),
 
             Text(
-              '''Worem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.''',
+              """Hamdard University is a well-established educational institution founded by the visionary scholar and philanthropist Shaheed Hakim Mohammed Said. Built on the principles of knowledge, ethics, and service to humanity, the university aims to provide quality education and develop individuals who contribute positively to society. It offers a wide range of programs in fields such as science, technology, business, and healthcare.
+
+The university focuses on creating a supportive and disciplined learning environment where students can grow both academically and personally. With experienced faculty, modern facilities, and a strong emphasis on research and innovation, Hamdard University prepares students to face real-world challenges with confidence and professionalism.
+
+Hamdard University continues the legacy of Hakim Mohammed Said by promoting education, character building, and lifelong learning. Its mission is to combine academic excellence with moral values, while its vision is to become a leading institution recognized for its contribution to education, research, and community development.""",
               textAlign: TextAlign.justify,
               style: TextStyle(
                 color: whiteColor,
