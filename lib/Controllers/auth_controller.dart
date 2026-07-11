@@ -27,7 +27,6 @@ class AuthController extends GetxController {
 
     fromSplash ? null : myLoadingDialog();
     await response.hitAPI().then((value) async {
-      Get.back();
       if (value.split(" ").first != 'error') {
         userModel.value = userModelFromJson(value);
 
@@ -47,10 +46,12 @@ class AuthController extends GetxController {
           isRemember ? box.write('user', userModel.value.toJson()) : null;
           isRemember ? box.write('password', password) : null;
           await PushNotificationSystem().generateAndGetToken();
+          await sendFcmToken();
           Get.offAll(() => MyBottomBar());
         }
       } else {
         final msg = jsonDecode(value.split("error ").last);
+        Get.back();
         myWarningDialog(
           title: 'Error',
           subtitle: msg['error'],
@@ -82,10 +83,11 @@ class AuthController extends GetxController {
     response.typeSetter = 'post';
     response.headerSetter = {'Content-Type': 'application/json'};
     myLoadingDialog();
-    await response.hitAPI().then((value) {
-      Get.back();
+    await response.hitAPI().then((value) async {
       if (value.split(" ").first != 'error') {
         userModel.value = userModelFromJson(value);
+        Get.back();
+
         mySuccessDialog(
           title: 'Account Registered',
           subtitle: 'We\'ve sent an OTP, Please check email to verify.',
@@ -96,6 +98,7 @@ class AuthController extends GetxController {
         );
       } else {
         final msg = jsonDecode(value.split("error ").last);
+        Get.back();
         myWarningDialog(title: 'Error', subtitle: msg['error']);
       }
     });
@@ -224,6 +227,24 @@ class AuthController extends GetxController {
       } else {
         final msg = jsonDecode(value.split("error ").last);
         myWarningDialog(title: 'Error', subtitle: msg['error']);
+      }
+    });
+  }
+
+  Future<void> sendFcmToken() async {
+    response.bodySetter2 = {'fcm_token': fcmToken};
+    response.urlSetter = Api.sendFcmTokenAPI;
+    response.typeSetter = 'post';
+    response.headerSetter = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${userModel.value.accessToken}',
+    };
+    await response.hitAPI().then((value) {
+      if (value.split(" ").first != 'error') {
+        myPrint('FCM Token sent successfully $fcmToken');
+      } else {
+        final msg = jsonDecode(value.split("error ").last);
+        myPrint('Error sending FCM Token: ${msg['error']}');
       }
     });
   }

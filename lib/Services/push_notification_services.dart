@@ -117,7 +117,10 @@ class PushNotificationSystem {
   // Get and Read FCM Notification Token..
   Future<String> generateAndGetToken() async {
     String? registrationToken = await messaging.getToken();
+    fcmToken = registrationToken ?? '';
     myPrint('FCM Token is $registrationToken');
+    fcmToken = registrationToken ?? '';
+    myPrint('FCM DB Token is $fcmToken');
 
     final bool isNotification = box.read<bool>('isNotification') ?? true;
     if (isNotification) {

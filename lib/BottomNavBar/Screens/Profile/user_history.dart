@@ -240,6 +240,9 @@ class _UserHistoryState extends State<UserHistory> {
                               ),
 
                               child: Text(
+                                 // item.returnDate == null
+                                    // ? 'Not Returned'
+                                    // : 'Returned On: ${DateFormat('dd MMM, yyyy').format(item.returnDate ?? DateTime.now())}',
                                 item.returnDate == null
                                     ? 'Not Returned'
                                     : 'Returned On: ${DateFormat('dd MMM, yyyy').format(item.returnDate ?? DateTime.now())}',

@@ -43,7 +43,7 @@ class History {
     final num? fineTableAmount;
     final DateTime? issueDate;
     final int? issueId;
-    final dynamic returnDate;
+    final DateTime? returnDate;
     final String? status;
     final String? userId;
 
@@ -74,7 +74,7 @@ class History {
         fineTableAmount: json["fine_table_amount"],
         issueDate: json["issue_date"] == null ? null : DateTime.parse(json["issue_date"]),
         issueId: json["issue_id"],
-        returnDate: json["return_date"],
+        returnDate: json["return_date"] == null ? null : DateTime.parse(json["return_date"]),
         status: json["status"],
         userId: json["user_id"],
     );
@@ -90,7 +90,7 @@ class History {
         "fine_table_amount": fineTableAmount,
         "issue_date": issueDate == null ? null : "${issueDate!.year.toString().padLeft(4, '0')}-${issueDate!.month.toString().padLeft(2, '0')}-${issueDate!.day.toString().padLeft(2, '0')}",
         "issue_id": issueId,
-        "return_date": returnDate,
+        "return_date": returnDate == null ? null : "${returnDate!.year.toString().padLeft(4, '0')}-${returnDate!.month.toString().padLeft(2, '0')}-${returnDate!.day.toString().padLeft(2, '0')}",
         "status": status,
         "user_id": userId,
     };

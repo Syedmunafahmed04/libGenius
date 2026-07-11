@@ -49,6 +49,7 @@ myLoadingDialog({String? title, bool showLoader = false}) {
 
 AccessCredentials? credentials;
 String fcmAccessToken = '';
+String fcmToken = '';
 
 mySnackBar({required String title, required String message, int duration = 1}) {
   Get.snackbar(

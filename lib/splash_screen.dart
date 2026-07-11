@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:libgenius/Auth/login_page.dart';
+import 'package:libgenius/BottomNavBar/my_bottom_bar.dart';
 import 'package:libgenius/Controllers/auth_controller.dart';
 import 'package:libgenius/Global/colors.dart';
 import 'package:libgenius/Global/global.dart';
@@ -22,12 +23,12 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(Duration(seconds: 2));
     if (user != null && password != null) {
       userModel = UserModel.fromJson(user).obs;
-      await authController.login(
-        cms: userModel.value.studentData?.cmsId ?? '',
-        password: password,
-        fromSplash: true,
-      );
-      // await Get.offAll(() => MyBottomBar());
+      // await authController.login(
+      //   cms: userModel.value.studentData?.cmsId ?? '',
+      //   password: password,
+      //   fromSplash: true,
+      // );
+      await Get.offAll(() => MyBottomBar());
     } else {
       Get.offAll(() => LoginPage());
     }

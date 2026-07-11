@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:libgenius/Auth/change_password.dart';
@@ -311,6 +312,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     myLoadingDialog();
 
                     await box.remove('user');
+                    await FirebaseMessaging.instance.unsubscribeFromTopic(
+                      '00${userModel.value.studentData?.userId.toString()}',
+                    );
 
                     await Future.delayed(Duration(seconds: 1));
 

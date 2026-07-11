@@ -12,6 +12,7 @@ class Api {
   static const String resetPasswordAPI = '$baseAPI/reset-password';
   static const String changePasswordAPI = '$baseAPI/change-password';
   static const String updateProfileAPI = '$baseAPI/edit-profile';
+  static const String sendFcmTokenAPI = '$baseAPI/user/save-fcm-token';
 
   //Books
   static const String booksAPI = '$baseAPI/get-books';
